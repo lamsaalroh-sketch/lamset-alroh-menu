@@ -63,8 +63,33 @@ button,input{font:inherit} button{cursor:pointer}
 .category-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(72,25,57,.16);border-color:#bd7f9b}
 .category-visual{height:170px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 35%,#fff 0,#f8e8ef 48%,#e9c5d4 100%);font-size:82px}
 .category-card .category-name{padding:15px 14px 18px;text-align:center;font-size:19px;font-weight:900;color:#4b1737}
-.back-btn{border:1px solid #cfa3b5;background:#fff7fa;color:#5e1c40;border-radius:14px;padding:10px 16px;font-weight:900;display:none}
+.back-btn{
+  border:1px solid #a85a7f;
+  background:linear-gradient(135deg,#5f173e,#8a3565);
+  color:#fff;
+  border-radius:16px;
+  padding:13px 22px;
+  min-height:50px;
+  min-width:150px;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  font-size:16px;
+  font-weight:900;
+  letter-spacing:.1px;
+  box-shadow:0 10px 24px rgba(95,23,62,.18),inset 0 1px 0 rgba(255,255,255,.12);
+  cursor:pointer;
+  transition:transform .2s ease,box-shadow .2s ease,filter .2s ease;
+  display:none
+}
+.back-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 28px rgba(95,23,62,.24),inset 0 1px 0 rgba(255,255,255,.14);
+  filter:brightness(1.05)
+}
+.back-btn:active{transform:translateY(0) scale(.98)}
 .page-open .back-btn{display:inline-flex}
+
 .page-open .category-home{display:none}
 .page-open .categories{display:none}
 .page-open .search{display:block}
