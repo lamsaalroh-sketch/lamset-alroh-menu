@@ -56,6 +56,21 @@ button,input{font:inherit} button{cursor:pointer}
   box-shadow:0 7px 14px rgba(72,25,57,.18);
 }
 .add:hover{filter:brightness(1.08);transform:translateY(-1px)}
+
+/* Category home + section pages */
+.category-home{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:22px}
+.category-card{border:1px solid #dcb0c2;border-radius:24px;overflow:hidden;background:linear-gradient(145deg,#fffafd,#f4dce7);box-shadow:0 10px 24px rgba(72,25,57,.10);cursor:pointer;transition:.2s;position:relative}
+.category-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(72,25,57,.16);border-color:#bd7f9b}
+.category-visual{height:170px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 35%,#fff 0,#f8e8ef 48%,#e9c5d4 100%);font-size:82px}
+.category-card .category-name{padding:15px 14px 18px;text-align:center;font-size:19px;font-weight:900;color:#4b1737}
+.back-btn{border:1px solid #cfa3b5;background:#fff7fa;color:#5e1c40;border-radius:14px;padding:10px 16px;font-weight:900;display:none}
+.page-open .back-btn{display:inline-flex}
+.page-open .category-home{display:none}
+.page-open .categories{display:none}
+.page-open .search{display:block}
+.home-open .search{display:none}
+@media(max-width:850px){.category-home{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){.category-home{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.category-visual{height:130px;font-size:62px}.category-card .category-name{font-size:16px;padding:12px 8px 14px}}
 </style>
 </head>
 <body>
@@ -77,7 +92,12 @@ button,input{font:inherit} button{cursor:pointer}
   <div class="categories" id="cats" aria-label="أقسام المنيو"></div>
 
   <section>
-    <div class="section-title"><h2 id="sectionTitle">الأكثر طلباً</h2><small id="countText"></small></div>
+    <div class="section-title">
+      <button class="back-btn" id="backBtn" type="button">← الأقسام</button>
+      <h2 id="sectionTitle">أقسام المنيو</h2>
+      <small id="countText"></small>
+    </div>
+    <div class="category-home" id="categoryHome"></div>
     <div class="grid" id="grid"></div>
     <div class="empty" id="empty">ماكو أصناف مطابقة للبحث حالياً.</div>
   </section>
@@ -336,15 +356,44 @@ function loadCart(){
 function saveCart(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(cart))}catch(_){} }
 function normalizeCart(){cart=cart.filter(c=>safeItems().some(i=>String(i.id)===String(c.id)));saveCart()}
 
+function categoryEmoji(c){
+  const m={
+    'المطبخ الشرقي':'🍲','المشاوي':'🥩','الشاورما':'🌯','السناكات':'🍔','حلا بارد':'🍰',
+    'بان كيك':'🥞','الكريب و الوافل':'🧇','البيتزا':'🍕','الايس كريم':'🍨','المشروبات الغازية':'🥤',
+    'المشروبات الساخنة':'☕','العصائر والمشروبات':'🧃','ايس كوفي':'🧋','سموذي':'🥭',
+    'ميلك شيك':'🥛','الاراكيل':'🪔','الاراكيل الطبيعية':'🪴','الموهيتو':'🍹','المكسرات':'🥜','فواكة':'🍓','الايس كريم':'🍦'
+  };
+  return m[c]||'🍽️';
+}
+function openCategory(c){
+  active=c;
+  if(c==='الكل'){history.replaceState(null,'',window.location.pathname+window.location.search);document.body.classList.add('home-open');document.body.classList.remove('page-open')}
+  else{location.hash=encodeURIComponent(c);document.body.classList.add('page-open');document.body.classList.remove('home-open')}
+  render();
+}
 function renderCats(){
-  catsEl.innerHTML=cats.map(c=>`<button class="cat ${c===active?'active':''}" data-cat="${escapeHtml(c)}" type="button">${escapeHtml(c)}</button>`).join('');
-  catsEl.querySelectorAll('.cat').forEach(b=>b.addEventListener('click',()=>{active=b.dataset.cat;render()}));
+  catsEl.innerHTML=cats.filter(c=>c!=='الكل').map(c=>`<button class="cat ${c===active?'active':''}" data-cat="${escapeHtml(c)}" type="button">${escapeHtml(c)}</button>`).join('');
+  catsEl.querySelectorAll('.cat').forEach(b=>b.addEventListener('click',()=>openCategory(b.dataset.cat)));
+}
+function renderCategoryHome(){
+  const home=$('categoryHome');
+  home.innerHTML=cats.filter(c=>c!=='الكل').map(c=>`<button class="category-card" data-open-cat="${escapeHtml(c)}" type="button"><div class="category-visual" aria-hidden="true">${categoryEmoji(c)}</div><div class="category-name">${escapeHtml(c)}</div></button>`).join('');
+  home.querySelectorAll('[data-open-cat]').forEach(b=>b.addEventListener('click',()=>openCategory(b.dataset.openCat)));
 }
 function escapeHtml(value){return String(value??'').replace(/[&<>'"]/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[s]))}
 function render(){
   renderCats();
+  renderCategoryHome();
+  if(active==='الكل'){
+    $('sectionTitle').textContent=lang==='ar'?'أقسام المنيو':'Menu sections';
+    $('countText').textContent=lang==='ar'?' اختار القسم':'Choose a section';
+    grid.innerHTML=''; $('empty').style.display='none'; search.value='';
+    document.body.classList.add('home-open'); document.body.classList.remove('page-open');
+    updateCart(); return;
+  }
+  $('sectionTitle').textContent=active;
   const q=search.value.trim().toLowerCase();
-  const list=safeItems().filter(x=>(active==='الكل'||x.cat===active)&&(!q||[x.name,x.en,x.desc,x.cat].join(' ').toLowerCase().includes(q)));
+  const list=safeItems().filter(x=>(x.cat===active)&&(!q||[x.name,x.en,x.desc,x.cat].join(' ').toLowerCase().includes(q)));
   grid.innerHTML=list.map(x=>{
     const name=lang==='ar'?x.name:(x.en||x.name);
     const desc=lang==='ar'?x.desc:'Delicious choice prepared fresh in our kitchen.';
@@ -433,13 +482,20 @@ function setupText(){
   if(table){$('tablePill').hidden=false;$('tablePill').textContent=lang==='ar'?`🪑 طاولة ${table}`:`🪑 Table ${table}`}
   $('sectionTitle').textContent=lang==='ar'?'الأكثر طلباً':'Popular';
   document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';search.placeholder=lang==='ar'?'ابحث عن قهوة، برغر، حلوى...':'Search coffee, burger, dessert...';$('langBtn').textContent='العربية / EN';
+  $('backBtn').textContent=lang==='ar'?'← الأقسام':'← Sections';
 }
 search.addEventListener('input',render);
+$('backBtn').addEventListener('click',()=>openCategory('الكل'));
+window.addEventListener('hashchange',()=>{
+  const raw=decodeURIComponent(window.location.hash.replace(/^#/,'')); 
+  active=cats.includes(raw)?raw:'الكل'; render();
+});
 $('close').addEventListener('click',closeModal);
 modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
 $('cartBtn').addEventListener('click',()=>{renderCartModal();modal.classList.add('open')});
 $('langBtn').addEventListener('click',()=>{lang=lang==='ar'?'en':'ar';setupText();render();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+const initialHash=decodeURIComponent(window.location.hash.replace(/^#/,'')); active=cats.includes(initialHash)?initialHash:'الكل';
 normalizeCart();setupText();render();
 </script>
 </body>
