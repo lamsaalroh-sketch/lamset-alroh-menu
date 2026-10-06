@@ -77,7 +77,7 @@ button,input{font:inherit} button{cursor:pointer}
 .category-card{position:relative;min-height:190px;padding:0;border:1px solid rgba(220,176,194,.95);border-radius:24px;overflow:hidden;background:#321b2b;box-shadow:0 12px 28px rgba(72,25,57,.13);cursor:pointer;transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease}
 .category-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,9,21,.05) 20%,rgba(30,9,21,.82) 100%)}
 .category-card:hover{transform:translateY(-5px) scale(1.01);box-shadow:0 18px 38px rgba(72,25,57,.2);border-color:#c784a0}
-.category-visual{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.02);transition:transform .5s ease,filter .35s ease}
+.category-visual{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;transform:scale(1.02);transition:transform .5s ease,filter .35s ease}
 .category-card:hover .category-visual{transform:scale(1.08);filter:saturate(1.08)}
 .category-card .category-name{position:absolute;z-index:2;right:14px;left:14px;bottom:14px;padding:10px 12px;border-radius:14px;background:rgba(38,12,28,.55);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(7px);color:#fff;font-size:18px;font-weight:900;text-shadow:0 2px 10px rgba(0,0,0,.35)}
 .category-card .category-en{display:block;font-size:11px;font-weight:700;color:#f2dfe9;margin-top:3px;letter-spacing:.25px}
@@ -394,26 +394,34 @@ const CATEGORY_EN={
   'الموهيتو':'Mojito','المكسرات':'Nuts','فواكة':'Fruits'
 };
 const CATEGORY_IMG={
-  'المطبخ الشرقي':'https://images.unsplash.com/photo-1560435726-6480fd46446b?auto=format&fit=crop&w=1000&q=80',
-  'المشاوي':'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?auto=format&fit=crop&w=1000&q=80',
-  'الشاورما':'https://images.unsplash.com/photo-1542674869-fbb720d111cc?auto=format&fit=crop&w=1000&q=80',
-  'السناكات':'https://images.unsplash.com/photo-1550949875-181c4577566b?auto=format&fit=crop&w=1000&q=80',
-  'حلا بارد':'https://images.unsplash.com/photo-1779608993337-fc83f391bbed?auto=format&fit=crop&w=1000&q=80',
-  'بان كيك':'https://images.unsplash.com/photo-1568240464340-261c0f65a455?auto=format&fit=crop&w=1000&q=80',
-  'الكريب و الوافل':'https://images.unsplash.com/photo-1761095596614-31172e9822e0?auto=format&fit=crop&w=1000&q=80',
-  'البيتزا':'https://images.unsplash.com/photo-1774806189017-f4c1f2760ad2?auto=format&fit=crop&w=1000&q=80',
-  'الايس كريم':'https://images.unsplash.com/photo-1676096385844-db34a57c7e96?auto=format&fit=crop&w=1000&q=80',
-  'المشروبات الغازية':'https://images.unsplash.com/photo-1780319232032-323521f7d108?auto=format&fit=crop&w=1000&q=80',
-  'المشروبات الساخنة':'https://images.unsplash.com/photo-1489866492941-15d60bdaa7e0?auto=format&fit=crop&w=1000&q=80',
-  'العصائر والمشروبات':'https://images.unsplash.com/photo-1628200487311-7bdfd5e6ace3?auto=format&fit=crop&w=1000&q=80',
-  'ايس كوفي':'https://images.unsplash.com/photo-1645243370550-be927ee941ab?auto=format&fit=crop&w=1000&q=80',
-  'سموذي':'https://images.unsplash.com/photo-1579446884285-279fd7ef14f4?auto=format&fit=crop&w=1000&q=80',
-  'ميلك شيك':'https://images.unsplash.com/photo-1541067831386-9863b5eb3fc7?auto=format&fit=crop&w=1000&q=80',
-  'الاراكيل':'https://images.unsplash.com/photo-1635547821500-77542481940c?auto=format&fit=crop&w=1000&q=80',
-  'الاراكيل الطبيعية':'https://images.unsplash.com/photo-1635547821500-77542481940c?auto=format&fit=crop&w=1000&q=80',
-  'الموهيتو':'https://images.unsplash.com/photo-1574179038422-dea3b6287e39?auto=format&fit=crop&w=1000&q=80',
-  'المكسرات':'https://images.unsplash.com/photo-1716910288147-eaf5aa799aac?auto=format&fit=crop&w=1000&q=80',
-  'فواكة':'https://images.unsplash.com/photo-1490324028530-3df5a9af0637?auto=format&fit=crop&w=1000&q=80'
+  'المطبخ الشرقي':'https://b.zmtcdn.com/data/collections/4702ab898a653b1ac20d69bed4357621_1683178377.png',
+  'المشاوي':'https://images.pexels.com/photos/28902905/pexels-photo-28902905.jpeg?cs=srgb&dl=pexels-pedrofurtadoo-28902905.jpg&fm=jpg',
+  'الشاورما':'https://arabiantaste.is/assets/harvested/a-plate-of-chicken-and-lamb-shawarma-with-appetizers-2.jpg',
+  'السناكات':'https://images.rawpixel.com/image_social_landscape/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTEwL2Rlc2lnbndpdGhtZTA5X2FfcmVhbGlzdGljX3Bob3RvX29mX2p1aWN5X2J1cmdlcl9hbmRfY3Jpc3B5X2ZyaVlfOWEzNDcxNzMtMmE3Zi00MmE4LTllNTgtNmM2Y2IwNTY5ZTFiXzEuanBn.jpg',
+  'حلا بارد':'https://i.fbcd.co/products/resized/resized-750-500/c-1000-designbundle-piece-cheesecake-berries-2-09-06-87469321a4b1286460a40dd5109b5531c3c23d64f4ba76e513e32610be91a959.jpg',
+  'بان كيك':'https://bodenaturkost.cstatic.com/media/df/81/e7/1768468811/Ahornsirup-Pancakes.jpg?ts=1769610752',
+  'الكريب و الوافل':'https://snapcalorie-webflow-website.s3.us-east-2.amazonaws.com/media/food_pics_v2/medium/chocolate_crepe.jpg',
+  'البيتزا':'https://images.unsplash.com/photo-1571757392712-7c1052de7ce5?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=1400',
+  'الايس كريم':'https://photographicdictionary.com/images/idioms/cherryontop.jpg',
+  'المشروبات الغازية':'https://images.pexels.com/photos/8879617/pexels-photo-8879617.jpeg?cs=srgb&dl=pexels-ron-lach-8879617.jpg&fm=jpg',
+  'المشروبات الساخنة':'https://tblg.k-img.com/restaurant/images/Rvw/245451/065a9a11cb7700b013be00d225bbb1ca.jpg',
+  'العصائر والمشروبات':'https://kanizsamediahaz.hu/sites/all/files/styles/torzskep/public/images/news/bev/2024-10/assortment-of-fruit-juices-2023-11-27-05-05-50-utc.jpg?itok=q6TXG_8X',
+  'ايس كوفي':'https://marecoffeebakery.com/resimler/proje/b/ice-mocha9.jpg',
+  'سموذي':'https://marecoffeebakery.com/resimler/proje/b/ice-mocha9.jpg',
+  'ميلك شيك':'https://images.squarespace-cdn.com/content/v1/640b11a09b04ab69b274fdaf/f3cdae7c-7697-4055-93cd-99618494946e/DSC_3693%2B-small.jpg',
+  'الاراكيل':'https://cdn.shopify.com/s/files/1/0364/1370/2282/files/Understanding_Hookah_Tobacco.jpg?v=1723700879',
+  'الاراكيل الطبيعية':'https://cdn.shopify.com/s/files/1/0364/1370/2282/files/Understanding_Hookah_Tobacco.jpg?v=1723700879',
+  'الموهيتو':'https://image.essen-und-trinken.de/11856240/t/Tz/v8/w960/r1/-/mojito-b30091f3a4628f7e22bc28b4a31e559d-mojito-jpg--21379-.jpg',
+  'المكسرات':'https://www.nutnutshop.com/cdn/shop/files/55_CORAZON_MIXjul._14_2025.jpg?v=1752663237&width=2048',
+  'فواكة':'https://rare-gallery.com/thumbs/759132-Fruit-Grapes-Strawberry-Melons.jpg'
+}
+
+const CATEGORY_POS={
+  'المطبخ الشرقي':'center center','المشاوي':'center center','الشاورما':'center center','السناكات':'center center',
+  'حلا بارد':'center 45%','بان كيك':'center 48%','الكريب و الوافل':'center 50%','البيتزا':'center center','الايس كريم':'center 50%',
+  'المشروبات الغازية':'center 50%','المشروبات الساخنة':'center center','العصائر والمشروبات':'center center','ايس كوفي':'center 50%',
+  'سموذي':'center 50%','ميلك شيك':'center 45%','الاراكيل':'center 52%','الاراكيل الطبيعية':'center 50%','الموهيتو':'center 50%',
+  'المكسرات':'center 50%','فواكة':'center 50%'
 };
 function categoryLabel(c){return lang==='ar'?c:(CATEGORY_EN[c]||c)}
 function openCategory(c){
@@ -430,7 +438,7 @@ function openCategory(c){
 function renderCategoryHome(){
   const home=$('categoryHome');
   home.innerHTML=cats.filter(c=>c!=='الكل').map(c=>`<button class="category-card" data-open-cat="${escapeHtml(c)}" type="button" aria-label="${escapeHtml(categoryLabel(c))}">
-    <div class="category-visual" style="background-image:url("${CATEGORY_IMG[c]||''}")"></div>
+    <div class="category-visual" style="background-image:url("${CATEGORY_IMG[c]||''}");background-position:${CATEGORY_POS[c]||'center center'}"></div>
     <div class="category-name">${escapeHtml(categoryLabel(c))}<span class="category-en">${escapeHtml(lang==='ar'?(CATEGORY_EN[c]||''):(c||''))}</span></div>
   </button>`).join('');
   home.querySelectorAll('[data-open-cat]').forEach(b=>b.addEventListener('click',()=>openCategory(b.dataset.openCat)));
@@ -441,6 +449,7 @@ function renderCategoryHero(){
   const image=CATEGORY_IMG[active]||'';
   hero.hidden=false;
   $('categoryHeroImage').style.backgroundImage=image?`url("${image}")`:'';
+  $('categoryHeroImage').style.backgroundPosition=CATEGORY_POS[active]||'center center';
   $('heroTitle').textContent=categoryLabel(active);
   $('heroDescription').textContent=lang==='ar'?`اختيارات ${active} من منيو مطعم وكافيه لمسة الروح.`:`Selected ${categoryLabel(active)} from Lamset Alroh Restaurant & Cafe.`;
   $('heroEyebrow').textContent=lang==='ar'?'قسم المنيو • لمسة الروح':'MENU SECTION • LAMSET ALROH';
