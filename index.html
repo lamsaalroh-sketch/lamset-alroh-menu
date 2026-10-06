@@ -431,7 +431,7 @@ function renderCategoryHome(){
   const home=$('categoryHome');
   home.innerHTML=cats.filter(c=>c!=='الكل').map(c=>`<button class="category-card" data-open-cat="${escapeHtml(c)}" type="button" aria-label="${escapeHtml(categoryLabel(c))}">
     <div class="category-visual" style="background-image:url("${CATEGORY_IMG[c]||''}")"></div>
-    <div class="category-name">${escapeHtml(categoryLabel(c))}<span class="category-en">${escapeHtml(lang==='ar'?(CATEGORY_EN[c]||''):'مطعم وكافيه لمسة الروح')}</span></div>
+    <div class="category-name">${escapeHtml(categoryLabel(c))}<span class="category-en">${escapeHtml(lang==='ar'?(CATEGORY_EN[c]||''):(c||''))}</span></div>
   </button>`).join('');
   home.querySelectorAll('[data-open-cat]').forEach(b=>b.addEventListener('click',()=>openCategory(b.dataset.openCat)));
 }
