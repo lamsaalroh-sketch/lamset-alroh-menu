@@ -71,6 +71,29 @@ button,input{font:inherit} button{cursor:pointer}
 .home-open .search{display:none}
 @media(max-width:850px){.category-home{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:560px){.category-home{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.category-visual{height:130px;font-size:62px}.category-card .category-name{font-size:16px;padding:12px 8px 14px}}
+
+/* Premium category experience */
+.category-home{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:20px}
+.category-card{position:relative;min-height:190px;padding:0;border:1px solid rgba(220,176,194,.95);border-radius:24px;overflow:hidden;background:#321b2b;box-shadow:0 12px 28px rgba(72,25,57,.13);cursor:pointer;transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease}
+.category-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,9,21,.05) 20%,rgba(30,9,21,.82) 100%)}
+.category-card:hover{transform:translateY(-5px) scale(1.01);box-shadow:0 18px 38px rgba(72,25,57,.2);border-color:#c784a0}
+.category-visual{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.02);transition:transform .5s ease,filter .35s ease}
+.category-card:hover .category-visual{transform:scale(1.08);filter:saturate(1.08)}
+.category-card .category-name{position:absolute;z-index:2;right:14px;left:14px;bottom:14px;padding:10px 12px;border-radius:14px;background:rgba(38,12,28,.55);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(7px);color:#fff;font-size:18px;font-weight:900;text-shadow:0 2px 10px rgba(0,0,0,.35)}
+.category-card .category-en{display:block;font-size:11px;font-weight:700;color:#f2dfe9;margin-top:3px;letter-spacing:.25px}
+.category-hero{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px;align-items:stretch;margin:4px 0 20px;border-radius:24px;overflow:hidden;background:#351729;border:1px solid #cf9db2;box-shadow:0 14px 32px rgba(72,25,57,.14);animation:heroIn .45s ease both}
+.category-hero-image{min-height:245px;background-size:cover;background-position:center;position:relative}
+.category-hero-image::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(31,10,23,.1),rgba(31,10,23,.68))}
+.category-hero-copy{padding:28px;display:flex;justify-content:center;flex-direction:column;color:#fff;background:linear-gradient(145deg,#451735,#6f1f4d)}
+.category-hero-copy .eyebrow{font-size:12px;color:#efcad9;letter-spacing:.7px;text-transform:uppercase}
+.category-hero-copy h3{margin:7px 0 2px;font-size:30px}
+.category-hero-copy p{margin:8px 0 0;color:#f3e4eb;line-height:1.7}
+.enter-grid{animation:cardsIn .45s ease both}
+.card{animation:cardsIn .45s ease both}
+@keyframes heroIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes cardsIn{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+@media(max-width:850px){.category-home{grid-template-columns:repeat(3,minmax(0,1fr))}.category-hero{grid-template-columns:1fr}.category-hero-image{min-height:210px}}
+@media(max-width:560px){.category-home{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.category-card{min-height:160px}.category-card .category-name{font-size:16px;bottom:10px;right:9px;left:9px;padding:9px}.category-hero{margin-top:2px;border-radius:20px}.category-hero-image{min-height:185px}.category-hero-copy{padding:20px}.category-hero-copy h3{font-size:25px}}
 </style>
 </head>
 <body>
@@ -89,8 +112,6 @@ button,input{font:inherit} button{cursor:pointer}
     <div class="search"><span>⌕</span><input id="search" aria-label="البحث في المنيو" placeholder="ابحث عن قهوة، برغر، حلوى..." autocomplete="off" /></div>
     <button class="lang" id="langBtn" type="button">العربية / EN</button>
   </div>
-  <div class="categories" id="cats" aria-label="أقسام المنيو"></div>
-
   <section>
     <div class="section-title">
       <button class="back-btn" id="backBtn" type="button">← الأقسام</button>
@@ -98,7 +119,15 @@ button,input{font:inherit} button{cursor:pointer}
       <small id="countText"></small>
     </div>
     <div class="category-home" id="categoryHome"></div>
-    <div class="grid" id="grid"></div>
+    <div class="category-hero" id="categoryHero" hidden>
+      <div class="category-hero-image" id="categoryHeroImage"></div>
+      <div class="category-hero-copy">
+        <div class="eyebrow" id="heroEyebrow">LAMSET ALROH</div>
+        <h3 id="heroTitle"></h3>
+        <p id="heroDescription"></p>
+      </div>
+    </div>
+    <div class="grid enter-grid" id="grid"></div>
     <div class="empty" id="empty">ماكو أصناف مطابقة للبحث حالياً.</div>
   </section>
   <div class="footer">
@@ -107,7 +136,7 @@ button,input{font:inherit} button{cursor:pointer}
   </div>
 </div>
 
-<div class="cart" id="cart"><div><b id="cartCount">0</b> صنف في الطلب • <b id="cartTotal">0</b> د.ع</div><button id="cartBtn" type="button">عرض الطلب</button></div>
+<div class="cart" id="cart"><div><b id="cartCount">0</b><span id="cartLabel"> صنف في الطلب • </span><b id="cartTotal">0</b> د.ع</div><button id="cartBtn" type="button">عرض الطلب</button></div>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="تفاصيل الطلب"><div class="sheet"><button class="close" id="close" type="button" aria-label="إغلاق">✕</button><div id="detail"></div></div></div>
 
@@ -342,7 +371,7 @@ const params=new URLSearchParams(window.location.search);
 const table=englishDigits(params.get('table')||params.get('t')||'');
 
 const $=id=>document.getElementById(id);
-const grid=$('grid'), catsEl=$('cats'), search=$('search'), modal=$('modal');
+const grid=$('grid'), search=$('search'), modal=$('modal');
 
 function fmt(n){return Number(n||0).toLocaleString('en-US')}
 function englishDigits(value){return String(value??'').replace(/[٠-٩]/g,d=>String('٠١٢٣٤٥٦٧٨٩'.indexOf(d))).replace(/[۰-۹]/g,d=>String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))}
@@ -356,48 +385,89 @@ function loadCart(){
 function saveCart(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(cart))}catch(_){} }
 function normalizeCart(){cart=cart.filter(c=>safeItems().some(i=>String(i.id)===String(c.id)));saveCart()}
 
-function categoryEmoji(c){
-  const m={
-    'المطبخ الشرقي':'🍲','المشاوي':'🥩','الشاورما':'🌯','السناكات':'🍔','حلا بارد':'🍰',
-    'بان كيك':'🥞','الكريب و الوافل':'🧇','البيتزا':'🍕','الايس كريم':'🍨','المشروبات الغازية':'🥤',
-    'المشروبات الساخنة':'☕','العصائر والمشروبات':'🧃','ايس كوفي':'🧋','سموذي':'🥭',
-    'ميلك شيك':'🥛','الاراكيل':'🪔','الاراكيل الطبيعية':'🪴','الموهيتو':'🍹','المكسرات':'🥜','فواكة':'🍓','الايس كريم':'🍦'
-  };
-  return m[c]||'🍽️';
-}
+const CATEGORY_EN={
+  'المطبخ الشرقي':'Eastern Kitchen','المشاوي':'Grills','الشاورما':'Shawarma','السناكات':'Snacks',
+  'حلا بارد':'Cold Desserts','بان كيك':'Pancakes','الكريب و الوافل':'Crepe & Waffles','البيتزا':'Pizza',
+  'الايس كريم':'Ice Cream','المشروبات الغازية':'Soft Drinks','المشروبات الساخنة':'Hot Drinks',
+  'العصائر والمشروبات':'Juices & Drinks','ايس كوفي':'Iced Coffee','سموذي':'Smoothies',
+  'ميلك شيك':'Milkshakes','الاراكيل':'Hookahs','الاراكيل الطبيعية':'Natural Hookahs',
+  'الموهيتو':'Mojito','المكسرات':'Nuts','فواكة':'Fruits'
+};
+const CATEGORY_IMG={
+  'المطبخ الشرقي':'https://images.unsplash.com/photo-1560435726-6480fd46446b?auto=format&fit=crop&w=1000&q=80',
+  'المشاوي':'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?auto=format&fit=crop&w=1000&q=80',
+  'الشاورما':'https://images.unsplash.com/photo-1542674869-fbb720d111cc?auto=format&fit=crop&w=1000&q=80',
+  'السناكات':'https://images.unsplash.com/photo-1550949875-181c4577566b?auto=format&fit=crop&w=1000&q=80',
+  'حلا بارد':'https://images.unsplash.com/photo-1779608993337-fc83f391bbed?auto=format&fit=crop&w=1000&q=80',
+  'بان كيك':'https://images.unsplash.com/photo-1568240464340-261c0f65a455?auto=format&fit=crop&w=1000&q=80',
+  'الكريب و الوافل':'https://images.unsplash.com/photo-1761095596614-31172e9822e0?auto=format&fit=crop&w=1000&q=80',
+  'البيتزا':'https://images.unsplash.com/photo-1774806189017-f4c1f2760ad2?auto=format&fit=crop&w=1000&q=80',
+  'الايس كريم':'https://images.unsplash.com/photo-1676096385844-db34a57c7e96?auto=format&fit=crop&w=1000&q=80',
+  'المشروبات الغازية':'https://images.unsplash.com/photo-1780319232032-323521f7d108?auto=format&fit=crop&w=1000&q=80',
+  'المشروبات الساخنة':'https://images.unsplash.com/photo-1489866492941-15d60bdaa7e0?auto=format&fit=crop&w=1000&q=80',
+  'العصائر والمشروبات':'https://images.unsplash.com/photo-1628200487311-7bdfd5e6ace3?auto=format&fit=crop&w=1000&q=80',
+  'ايس كوفي':'https://images.unsplash.com/photo-1645243370550-be927ee941ab?auto=format&fit=crop&w=1000&q=80',
+  'سموذي':'https://images.unsplash.com/photo-1579446884285-279fd7ef14f4?auto=format&fit=crop&w=1000&q=80',
+  'ميلك شيك':'https://images.unsplash.com/photo-1541067831386-9863b5eb3fc7?auto=format&fit=crop&w=1000&q=80',
+  'الاراكيل':'https://images.unsplash.com/photo-1635547821500-77542481940c?auto=format&fit=crop&w=1000&q=80',
+  'الاراكيل الطبيعية':'https://images.unsplash.com/photo-1635547821500-77542481940c?auto=format&fit=crop&w=1000&q=80',
+  'الموهيتو':'https://images.unsplash.com/photo-1574179038422-dea3b6287e39?auto=format&fit=crop&w=1000&q=80',
+  'المكسرات':'https://images.unsplash.com/photo-1716910288147-eaf5aa799aac?auto=format&fit=crop&w=1000&q=80',
+  'فواكة':'https://images.unsplash.com/photo-1490324028530-3df5a9af0637?auto=format&fit=crop&w=1000&q=80'
+};
+function categoryLabel(c){return lang==='ar'?c:(CATEGORY_EN[c]||c)}
 function openCategory(c){
   active=c;
-  if(c==='الكل'){history.replaceState(null,'',window.location.pathname+window.location.search);document.body.classList.add('home-open');document.body.classList.remove('page-open')}
-  else{location.hash=encodeURIComponent(c);document.body.classList.add('page-open');document.body.classList.remove('home-open')}
+  if(c==='الكل'){
+    history.replaceState(null,'',window.location.pathname+window.location.search);
+    document.body.classList.add('home-open');document.body.classList.remove('page-open');
+  }else{
+    history.pushState(null,'',window.location.pathname+window.location.search+'#'+encodeURIComponent(c));
+    document.body.classList.add('page-open');document.body.classList.remove('home-open');
+  }
   render();
-}
-function renderCats(){
-  catsEl.innerHTML=cats.filter(c=>c!=='الكل').map(c=>`<button class="cat ${c===active?'active':''}" data-cat="${escapeHtml(c)}" type="button">${escapeHtml(c)}</button>`).join('');
-  catsEl.querySelectorAll('.cat').forEach(b=>b.addEventListener('click',()=>openCategory(b.dataset.cat)));
 }
 function renderCategoryHome(){
   const home=$('categoryHome');
-  home.innerHTML=cats.filter(c=>c!=='الكل').map(c=>`<button class="category-card" data-open-cat="${escapeHtml(c)}" type="button"><div class="category-visual" aria-hidden="true">${categoryEmoji(c)}</div><div class="category-name">${escapeHtml(c)}</div></button>`).join('');
+  home.innerHTML=cats.filter(c=>c!=='الكل').map(c=>`<button class="category-card" data-open-cat="${escapeHtml(c)}" type="button" aria-label="${escapeHtml(categoryLabel(c))}">
+    <div class="category-visual" style="background-image:url("${CATEGORY_IMG[c]||''}")"></div>
+    <div class="category-name">${escapeHtml(categoryLabel(c))}<span class="category-en">${escapeHtml(lang==='ar'?(CATEGORY_EN[c]||''):'مطعم وكافيه لمسة الروح')}</span></div>
+  </button>`).join('');
   home.querySelectorAll('[data-open-cat]').forEach(b=>b.addEventListener('click',()=>openCategory(b.dataset.openCat)));
+}
+function renderCategoryHero(){
+  const hero=$('categoryHero');
+  if(active==='الكل'){hero.hidden=true;return}
+  const image=CATEGORY_IMG[active]||'';
+  hero.hidden=false;
+  $('categoryHeroImage').style.backgroundImage=image?`url("${image}")`:'';
+  $('heroTitle').textContent=categoryLabel(active);
+  $('heroDescription').textContent=lang==='ar'?\`اختيارات ${active} من منيو مطعم وكافيه لمسة الروح.\`:\`Selected ${categoryLabel(active)} from Lamset Alroh Restaurant & Cafe.\`;
+  $('heroEyebrow').textContent=lang==='ar'?'قسم المنيو • لمسة الروح':'MENU SECTION • LAMSET ALROH';
 }
 function escapeHtml(value){return String(value??'').replace(/[&<>'"]/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[s]))}
 function render(){
-  renderCats();
   renderCategoryHome();
   if(active==='الكل'){
-    $('sectionTitle').textContent=lang==='ar'?'أقسام المنيو':'Menu sections';
-    $('countText').textContent=lang==='ar'?' اختار القسم':'Choose a section';
-    grid.innerHTML=''; $('empty').style.display='none'; search.value='';
-    document.body.classList.add('home-open'); document.body.classList.remove('page-open');
-    updateCart(); return;
+    $('sectionTitle').textContent=lang==='ar'?'أقسام المنيو':'Menu Sections';
+    $('countText').textContent=lang==='ar'?'اختار القسم':'Choose a section';
+    grid.innerHTML='';$('empty').style.display='none';search.value='';
+    renderCategoryHero();
+    document.body.classList.add('home-open');document.body.classList.remove('page-open');
+    updateCart();return;
   }
-  $('sectionTitle').textContent=active;
+  $('sectionTitle').textContent=categoryLabel(active);
+  renderCategoryHero();
   const q=search.value.trim().toLowerCase();
-  const list=safeItems().filter(x=>(x.cat===active)&&(!q||[x.name,x.en,x.desc,x.cat].join(' ').toLowerCase().includes(q)));
+  const list=safeItems().filter(x=>(x.cat===active)&&(!q||[x.name,x.en,x.desc,x.cat,CATEGORY_EN[x.cat]||''].join(' ').toLowerCase().includes(q)));
   grid.innerHTML=list.map(x=>{
     const name=lang==='ar'?x.name:(x.en||x.name);
     const desc=lang==='ar'?x.desc:'Delicious choice prepared fresh in our kitchen.';
-    return `<article class="card ${x.featured?'featured':''}" data-id="${x.id}" tabindex="0" role="button" aria-label="${escapeHtml(name)}"><div class="body"><div class="row"><div><div class="name">${escapeHtml(name)}</div><div class="desc">${escapeHtml(desc)}</div></div><div><div class="price">${fmt(x.price)} د.ع</div><button class="add" data-add="${x.id}" type="button" aria-label="إضافة ${escapeHtml(name)}">+</button></div></div></div></article>`;
+    const addLabel=lang==='ar'?'إضافة':'Add';
+    return `<article class="card ${x.featured?'featured':''}" data-id="${x.id}" tabindex="0" role="button" aria-label="${escapeHtml(name)}">
+      <div class="body"><div class="row"><div><div class="name">${escapeHtml(name)}</div><div class="desc">${escapeHtml(desc)}</div></div>
+      <div><div class="price">${fmt(x.price)} د.ع</div><button class="add" data-add="${x.id}" type="button" aria-label="${addLabel} ${escapeHtml(name)}">+</button></div></div></div>
+    </article>`;
   }).join('');
   grid.querySelectorAll('.card').forEach(card=>{
     card.addEventListener('click',e=>{if(!e.target.closest('[data-add]'))openItem(Number(card.dataset.id))});
@@ -432,7 +502,7 @@ function cartSummary(){
   normalizeCart();
   const count=cart.reduce((s,c)=>s+c.qty,0);const total=cart.reduce((s,c)=>{const x=getItem(c.id);return s+(x?Number(x.price)*c.qty:0)},0);return{count,total};
 }
-function updateCart(){const {count,total}=cartSummary();$('cartCount').textContent=count;$('cartTotal').textContent=fmt(total);$('cart').classList.toggle('show',count>0)}
+function updateCart(){const {count,total}=cartSummary();$('cartCount').textContent=count;$('cartTotal').textContent=fmt(total);$('cartLabel').textContent=lang==='ar'?' صنف في الطلب • ':' items • ';$('cartBtn').textContent=lang==='ar'?'عرض الطلب':'View order';$('cart').classList.toggle('show',count>0)}
 function renderCartModal(){
   const {count,total}=cartSummary();
   const rows=cart.map(c=>{const x=getItem(c.id);if(!x)return '';const name=lang==='ar'?x.name:(x.en||x.name);return `<div class="cart-item"><div><b>${escapeHtml(name)}</b><div class="price">${fmt(Number(x.price)*c.qty)} د.ع</div></div><div class="mini-actions"><button type="button" data-minus="${x.id}" aria-label="تقليل الكمية">−</button><span>${englishDigits(c.qty)}</span><button type="button" data-plus="${x.id}" aria-label="زيادة الكمية">+</button><button class="danger" type="button" data-remove="${x.id}">${lang==='ar'?'حذف':'Remove'}</button></div></div>`}).join('');
@@ -478,24 +548,31 @@ function fallbackCopy(text,done){
 }
 function closeModal(){modal.classList.remove('open');currentItem=null}
 function setupText(){
-  $('brandName').textContent=MENU_CONFIG.brand.name;$('badgeText').textContent=MENU_CONFIG.brand.badge;$('brandDescription').textContent=MENU_CONFIG.brand.description;$('footerText').textContent=MENU_CONFIG.brand.footer;$('qrNote').textContent=MENU_CONFIG.brand.qrNote;
-  if(table){$('tablePill').hidden=false;$('tablePill').textContent=lang==='ar'?`🪑 طاولة ${table}`:`🪑 Table ${table}`}
-  $('sectionTitle').textContent=lang==='ar'?'الأكثر طلباً':'Popular';
-  document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';search.placeholder=lang==='ar'?'ابحث عن قهوة، برغر، حلوى...':'Search coffee, burger, dessert...';$('langBtn').textContent='العربية / EN';
-  $('backBtn').textContent=lang==='ar'?'← الأقسام':'← Sections';
+  const ar=lang==='ar';
+  $('brandName').textContent=ar?MENU_CONFIG.brand.name:'Lamset Alroh Restaurant & Cafe';
+  $('badgeText').textContent=ar?MENU_CONFIG.brand.badge:'Restaurant & Cafe • Digital Menu';
+  $('brandDescription').textContent=ar?MENU_CONFIG.brand.description:'Welcome to Lamset Alroh Restaurant & Cafe. Browse the menu easily from your phone.';
+  $('footerText').textContent=ar?MENU_CONFIG.brand.footer:'Lamset Alroh Restaurant & Cafe © 2026';
+  $('qrNote').textContent=ar?MENU_CONFIG.brand.qrNote:'Scan the QR Code on your table to open the Lamset Alroh menu.';
+  if(table){$('tablePill').hidden=false;$('tablePill').textContent=ar?`🪑 طاولة ${table}`:`🪑 Table ${table}`}
+  $('sectionTitle').textContent=active==='الكل'?(ar?'أقسام المنيو':'Menu Sections'):categoryLabel(active);
+  document.documentElement.lang=lang;document.documentElement.dir=ar?'rtl':'ltr';
+  search.placeholder=ar?'ابحث عن قهوة، برغر، حلوى...':'Search coffee, burger, dessert...';
+  $('langBtn').textContent=ar?'English':'العربية';
+  $('backBtn').textContent=ar?'← الأقسام':'← Sections';
+  $('cartBtn').textContent=ar?'عرض الطلب':'View order';
+  $('cartLabel').textContent=ar?' صنف في الطلب • ':' items • ';
 }
 search.addEventListener('input',render);
 $('backBtn').addEventListener('click',()=>openCategory('الكل'));
-window.addEventListener('hashchange',()=>{
-  const raw=decodeURIComponent(window.location.hash.replace(/^#/,'')); 
-  active=cats.includes(raw)?raw:'الكل'; render();
-});
+window.addEventListener('popstate',()=>{const raw=decodeURIComponent(window.location.hash.replace(/^#/,''));active=cats.includes(raw)?raw:'الكل';setupText();render()});
+window.addEventListener('hashchange',()=>{const raw=decodeURIComponent(window.location.hash.replace(/^#/,''));active=cats.includes(raw)?raw:'الكل';setupText();render()});
 $('close').addEventListener('click',closeModal);
 modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
 $('cartBtn').addEventListener('click',()=>{renderCartModal();modal.classList.add('open')});
 $('langBtn').addEventListener('click',()=>{lang=lang==='ar'?'en':'ar';setupText();render();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
-const initialHash=decodeURIComponent(window.location.hash.replace(/^#/,'')); active=cats.includes(initialHash)?initialHash:'الكل';
+const initialHash=decodeURIComponent(window.location.hash.replace(/^#/,''));active=cats.includes(initialHash)?initialHash:'الكل';
 normalizeCart();setupText();render();
 </script>
 </body>
