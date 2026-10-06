@@ -442,7 +442,7 @@ function renderCategoryHero(){
   hero.hidden=false;
   $('categoryHeroImage').style.backgroundImage=image?`url("${image}")`:'';
   $('heroTitle').textContent=categoryLabel(active);
-  $('heroDescription').textContent=lang==='ar'?\`اختيارات ${active} من منيو مطعم وكافيه لمسة الروح.\`:\`Selected ${categoryLabel(active)} from Lamset Alroh Restaurant & Cafe.\`;
+  $('heroDescription').textContent=lang==='ar'?`اختيارات ${active} من منيو مطعم وكافيه لمسة الروح.`:`Selected ${categoryLabel(active)} from Lamset Alroh Restaurant & Cafe.`;
   $('heroEyebrow').textContent=lang==='ar'?'قسم المنيو • لمسة الروح':'MENU SECTION • LAMSET ALROH';
 }
 function escapeHtml(value){return String(value??'').replace(/[&<>'"]/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[s]))}
