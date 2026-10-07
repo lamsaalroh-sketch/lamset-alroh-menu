@@ -244,22 +244,19 @@ main#home{display:block}.hero{padding:22px 0 12px!important}.hero .eyebrow{color
   order:1!important;
   flex:0 0 118px!important;
   width:118px!important;
-  height:78px!important;
+  height:88px!important;
   border-radius:14px!important;
   display:block!important;
-  background-image:url("assets/category-reference-sprite.jpg")!important;
+  background-image:var(--ref-bg)!important;
   background-repeat:no-repeat!important;
-  background-size:400% 500%!important;
-  background-position:0 0!important;
+  background-size:400% 100%!important;
+  background-position:var(--ref-pos)!important;
   background-color:#fbf6f5!important;
   box-shadow:inset 0 0 0 1px rgba(90,35,65,.06)!important;
 }
-.cat[data-cat] .cat-photo{
-  background-position:calc(var(--cat-sx) * 33.333333%) calc(var(--cat-sy) * 25%)!important;
-}
 .cat img{display:none!important}
 .cat:hover .cat-photo{transform:scale(1.03)}
-.cat.featured-cat .cat-photo{filter:brightness(.90) saturate(.94)}
+.cat.featured-cat .cat-photo{filter:brightness(.92) saturate(.95)}
 @media(max-width:650px){
   .cat-photo{
     flex-basis:72px!important;
@@ -322,18 +319,24 @@ function renderHome(filter='') {
       if(normalizeSearch(x.ar).includes(q)) itemMatches.push({cat:c,item:x,index:i});
     }));
   }
+
+  // Exact thumbnail order from the approved reference screenshot.
+  const refTileMap=[3,2,1,0,6,5,4,7,11,10,9,8,15,14,13,12,19,18,17,16];
+
   $('categories').innerHTML=catMatches.map(c=>{
     const catIndex=DATA.indexOf(c);
-    const refTileMap=[3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12,19,18,17,16];
     const tile=refTileMap[catIndex] ?? catIndex;
-    const sx=tile%4, sy=Math.floor(tile/4);
+    const row=Math.floor(tile/4)+1;
+    const col=tile%4;
+    const pos=col===0?'0%':col===1?'33.333333%':col===2?'66.666667%':'100%';
     return `
-    <button class="cat" data-cat="${esc(c.ar)}" style="--cat-sx:${sx};--cat-sy:${sy}">
+    <button class="cat" data-cat="${esc(c.ar)}">
       <span class="cat-arrow" aria-hidden="true">‹</span>
-      <span class="cat-photo" aria-hidden="true"></span>
+      <span class="cat-photo" style="--ref-bg:url('assets/category-ref-${row}.jpg');--ref-pos:${pos} 0%"></span>
       <div class="caption"><div class="ar">${esc(lang==='ar'?c.ar:c.en)}</div><div class="en">${esc(lang==='ar'?c.en:c.ar)}</div></div>
     </button>`;
   }).join('');
+
   document.querySelectorAll('[data-cat]').forEach(b=>{
     b.onclick=()=>openCat(b.dataset.cat);
     if((b.dataset.cat||'')==='حلا بارد') b.classList.add('featured-cat');
