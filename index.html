@@ -308,7 +308,33 @@ main#home{display:block}.hero{padding:22px 0 12px!important}.hero .eyebrow{color
     min-height:unset!important;
   }
 }
-</style></head>
+/* SECTION PAGE - APPROVED REFERENCE ORDER */
+.sectionToolbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0 0 14px}
+.sectionToolbar .back{width:auto;min-width:220px;margin:0!important}
+.sectionCartHint{color:#936f80;font-size:13px;font-weight:700}
+.sectionHero{display:grid;grid-template-columns:1.55fr .95fr;min-height:320px;border:1px solid rgba(104,48,77,.14);border-radius:24px;overflow:hidden;background:#fffdfc;box-shadow:0 14px 34px rgba(91,47,69,.08)}
+.sectionImage{position:relative;min-height:320px;background:#eee1e5;overflow:hidden}
+.sectionImage::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(60,25,45,0) 55%,rgba(88,35,61,.30) 100%);pointer-events:none}
+.sectionImage img{width:100%;height:100%;min-height:320px;display:block;object-fit:cover;object-position:center}
+.sectionHero .sectionInfo{padding:36px 34px;background:linear-gradient(145deg,#fffdfc,#f8edef)!important;justify-content:center}
+.sectionHero .sectionInfo .eyebrow{color:#7a3b5b!important;font-size:11px;font-weight:900;letter-spacing:2px}
+.sectionHero .sectionInfo h3{font-size:48px!important;line-height:1.2;color:#652b4b!important;margin:10px 0 8px!important}
+.sectionHero .sectionInfo p{font-size:16px;color:#866f7b!important;line-height:1.9}
+.sectionSearchRow{display:flex;align-items:center;gap:12px;max-width:1150px;margin:18px auto 20px}
+.sectionSearch{flex:1}.sectionSearch input{width:100%;min-height:56px;padding:13px 18px;border-radius:18px;border:1px solid rgba(104,48,77,.16);background:#fffdfc;color:#4d293d;outline:none;font:700 16px/1.6 "Noto Sans Arabic","Segoe UI",system-ui,sans-serif;text-align:right;box-shadow:0 4px 16px rgba(90,43,68,.05)}
+.sectionSearch input::placeholder{color:#9b8790}.sectionSearch input:focus{border-color:rgba(113,44,80,.30);box-shadow:0 0 0 4px rgba(112,44,81,.07)}
+.sectionLang{min-width:135px!important;min-height:56px!important;background:#fffdfc!important;color:#6e2f51!important;border:1px solid rgba(104,48,77,.16)!important;box-shadow:0 4px 16px rgba(90,43,68,.05)!important}
+.page.show .items{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0 auto;max-width:1150px}
+.page.show .item{min-height:86px}
+@media(max-width:760px){
+  .sectionToolbar{align-items:stretch;flex-direction:column-reverse;gap:8px}
+  .sectionToolbar .back{width:100%;min-width:0}
+  .sectionCartHint{text-align:center}.sectionHero{grid-template-columns:1fr;min-height:unset}
+  .sectionImage,.sectionImage img{min-height:240px;height:240px}
+  .sectionHero .sectionInfo{padding:24px 20px}.sectionHero .sectionInfo h3{font-size:34px!important}
+  .sectionSearchRow{gap:8px;margin:12px 0 16px}.sectionLang{min-width:96px!important}
+  .page.show .items{grid-template-columns:1fr}
+}</style></head>
 <body>
 <div class="wrap">
   <header class="top heroTop">
@@ -331,15 +357,25 @@ main#home{display:block}.hero{padding:22px 0 12px!important}.hero .eyebrow{color
     <div class="categories" id="categories"></div><div class="search-results" id="searchResults"><div class="search-results-title">الأصناف المطابقة</div><div class="search-result-list" id="searchResultList"></div><div class="search-empty" id="searchEmpty">ماكو صنف مطابق للبحث</div></div>
   </main>
   <main id="page" class="page">
-    <button class="back" id="backBtn">← الأقسام</button>
-    <section class="sectionHead">
-      <div class="sectionImage" id="sectionImage"></div>
-      <div class="sectionInfo"><div class="eyebrow" id="sectionEyebrow">MENU SECTION</div><h3 id="sectionTitle"></h3><p id="sectionText"></p></div>
+    <div class="sectionToolbar">
+      <button class="back" id="backBtn" type="button">← العودة إلى الأقسام</button>
+      <div class="sectionCartHint">استكشف الأصناف واختر طلبك</div>
+    </div>
+    <section class="sectionHero">
+      <div class="sectionImage"><img id="sectionImageImg" alt="" decoding="async"></div>
+      <div class="sectionInfo">
+        <div class="eyebrow" id="sectionEyebrow">MENU SECTION</div>
+        <h3 id="sectionTitle"></h3>
+        <p id="sectionText"></p>
+      </div>
     </section>
+    <div class="sectionSearchRow">
+      <button class="lang-home sectionLang" id="sectionLangBtn" type="button">EN / العربية</button>
+      <div class="sectionSearch"><input id="sectionSearchInput" placeholder="ابحث عن صنف..." autocomplete="off"></div>
+    </div>
     <div class="items" id="items"></div>
     <div class="empty" id="empty"></div>
-  </main>
-  <div class="cart"><div class="cart-left"><div class="cart-icon">🛒</div><div><b>السلة</b><div id="cartSummary" style="color:#bcb5ad;font-size:11px;margin-top:2px"><span class="cart-count">0 أصناف • 0 د.ع</span></div></div></div><button id="viewCart" type="button">عرض السلة</button></div>
+  </main>  <div class="cart"><div class="cart-left"><div class="cart-icon">🛒</div><div><b>السلة</b><div id="cartSummary" style="color:#bcb5ad;font-size:11px;margin-top:2px"><span class="cart-count">0 أصناف • 0 د.ع</span></div></div></div><button id="viewCart" type="button">عرض السلة</button></div>
 
   <div class="cart-modal" id="cartModal" aria-hidden="true"><div class="cart-sheet"><h3>السلة</h3><div id="cartRows"></div><div class="cart-total"><span>المجموع</span><span id="cartTotal">0 د.ع</span></div><button class="cart-close" id="cartClose" type="button">إغلاق</button></div></div>
   <footer class="footer" id="footer">أكثر من مجرد وجبة .. إنها لمسة روح</footer>
@@ -402,17 +438,28 @@ function renderHome(filter='') {
     empty.classList.remove('show');
   }
 }
+function renderSectionItems(filter=''){
+  if(!active)return;
+  const q=normalizeSearch(filter);
+  const items=active.items.map((x,i)=>({x,i})).filter(r=>!q||normalizeSearch(r.x.ar).includes(q));
+  $('items').innerHTML=items.map(r=>`<div class="item"><div class="item-main"><button class="add-to-cart" type="button" data-add="${r.i}" aria-label="إضافة إلى السلة">+</button><div class="item-copy"><div class="name">${esc(r.x.ar)}</div><div class="price">${r.x.price} د.ع</div></div></div></div>`).join('');
+  document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>addToCart(active,Number(b.dataset.add)));
+  $('empty').style.display=items.length?'none':'block';
+  $('empty').textContent=q?(lang==='ar'?'ماكو صنف مطابق للبحث.':'No matching item found.'):(lang==='ar'?'لا توجد أصناف مضافة لهذا القسم حالياً.':'No items have been added to this section yet.');
+}
 function openCat(name) {
   active=DATA.find(c=>c.ar===name);
   if(!active)return;
-  $('home').style.display='none'; $('page').classList.add('show'); $('search').value=''; window.scrollTo(0,0);
-  $('sectionImage').style.backgroundImage=`url("${active.img}")`;
+  $('home').style.display='none';
+  $('page').classList.add('show');
+  $('search').value='';
+  $('sectionSearchInput').value='';
+  $('sectionImageImg').src=active.img;
+  $('sectionImageImg').alt=active.ar;
   $('sectionTitle').textContent=lang==='ar'?active.ar:active.en;
   $('sectionText').textContent=lang==='ar'?`اختيارات مميزة من ${active.ar} في منيو لمسة الروح.`:`Featured ${active.en} selections from Lamset Alroh.`;
-  $('items').innerHTML=active.items.map((x,i)=>`<div class="item"><div class="item-main"><button class="add-to-cart" type="button" data-add="${i}" aria-label="إضافة إلى السلة">+</button><div class="item-copy"><div class="name">${esc(x.ar)}</div><div class="price">${x.price} د.ع</div></div></div></div>`).join('');
-  document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>addToCart(active,Number(b.dataset.add)));
-  $('empty').style.display=active.items.length?'none':'block';
-  $('empty').textContent=lang==='ar'?'لا توجد أصناف مضافة لهذا القسم حالياً.':'No items have been added to this section yet.';
+  renderSectionItems('');
+  window.scrollTo(0,0);
 }
 function addToCart(section,index){
   const item=section.items[index];
@@ -435,6 +482,8 @@ function closeCart(){ $('cartModal').classList.remove('show'); $('cartModal').se
 $('viewCart').onclick=openCart; $('cartClose').onclick=closeCart; $('cartModal').onclick=e=>{if(e.target.id==='cartModal')closeCart();};
 function backHome(){active=null;$('page').classList.remove('show');$('home').style.display='block';$('search').value='';renderHome('');window.scrollTo(0,0)}
 $('backBtn').onclick=backHome;
+$('sectionSearchInput').oninput=e=>renderSectionItems(e.target.value);
+$('sectionLangBtn').onclick=()=>{lang=lang==='ar'?'en':'ar';document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';$('sectionLangBtn').textContent=lang==='ar'?'EN / العربية':'العربية / EN';if(active)openCat(active.ar);else renderHome($('search').value)};
 $('search').oninput=e=>{if(!active)renderHome(e.target.value)};
 if($('langBtn'))$('langBtn').onclick=()=>{lang=lang==='ar'?'en':'ar';document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';$('langBtn').textContent=lang==='ar'?'English':'العربية';$('choose').textContent=lang==='ar'?'اختر القسم الذي تريده':'Choose Your Section';$('chooseEn').textContent=lang==='ar'?'Choose Your Section':'اختر القسم الذي تريده';$('footer').textContent=lang==='ar'?'أكثر من مجرد وجبة .. إنها لمسة روح':'More than a meal .. it is a touch of soul'; if(active)openCat(active.ar); else renderHome($('search').value)};
 renderHome();
