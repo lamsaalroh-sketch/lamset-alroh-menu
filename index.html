@@ -452,7 +452,7 @@ function openCategory(c){
 function renderCategoryHome(){
   const home=$('categoryHome');
   home.innerHTML=cats.filter(c=>c!=='الكل').map(c=>`<button class="category-card" data-open-cat="${escapeHtml(c)}" type="button" aria-label="${escapeHtml(categoryLabel(c))}">`+
-    `<div class="category-visual" style="background-image:url("${CATEGORY_SPRITE}");background-size:500% 400%;background-position:${CATEGORY_POS[c]||'center center'}"></div>`+
+    `<div class="category-visual" style="background-image:url("${CATEGORY_SPRITE}");background-size:500% 200%;background-position:${CATEGORY_POS[c]||'center center'}"></div>`+
     `<div class="category-name">${escapeHtml(categoryLabel(c))}<span class="category-en">${escapeHtml(lang==='ar'?(CATEGORY_EN[c]||''):(c||''))}</span></div>`+
   `</button>`).join('');
   home.querySelectorAll('[data-open-cat]').forEach(b=>b.addEventListener('click',()=>openCategory(b.dataset.openCat)));
@@ -462,7 +462,7 @@ function renderCategoryHero(){
   if(active==='الكل'){hero.hidden=true;return}
   hero.hidden=false;
   $('categoryHeroImage').style.backgroundImage=`url("${CATEGORY_SPRITE}")`;
-  $('categoryHeroImage').style.backgroundSize='500% 400%';
+  $('categoryHeroImage').style.backgroundSize='500% 200%';
   $('categoryHeroImage').style.backgroundPosition=CATEGORY_POS[active]||'center center';
   $('heroTitle').textContent=categoryLabel(active);
   $('heroDescription').textContent=lang==='ar'?`اختيارات ${active} من منيو مطعم وكافيه لمسة الروح.`:`Selected ${categoryLabel(active)} from Lamset Alroh Restaurant & Cafe.`;
