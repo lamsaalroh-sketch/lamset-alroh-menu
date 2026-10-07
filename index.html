@@ -6,7 +6,7 @@
 <title>معاينة — مطعم وكافيه لمسة الروح</title>
 <style>
 :root{--bg:#09090a;--panel:#0f1113;--gold:#e3ad54;--gold2:#f4d58f;--cream:#f7f0e4;--text:#f8f3ea;--muted:#aaa39b;--line:rgba(227,173,84,.30);--maroon:#6b244d;--pink:#a94f74}
-*{box-sizing:border-box}html,body{margin:0;background:radial-gradient(circle at 50% -10%,#281b10 0,#08090a 42%,#050607 100%);color:var(--text);font-family:"Trebuchet MS","Segoe UI",Tahoma,Arial,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;background:radial-gradient(circle at 50% -10%,#281b10 0,#08090a 42%,#050607 100%);color:var(--text);font-family:"Noto Sans Arabic","Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 20%,rgba(214,168,92,.08),transparent 25%),radial-gradient(circle at 85% 30%,rgba(120,65,25,.08),transparent 25%)}
 .wrap{width:min(1280px,94%);margin:auto;padding:22px 0 112px}
 .top{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:7px 0 15px;border-bottom:1px solid rgba(227,173,84,.24);position:sticky;top:0;background:linear-gradient(180deg,rgba(9,9,10,.96),rgba(9,9,10,.82));backdrop-filter:blur(14px);z-index:20}
@@ -15,8 +15,8 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;background:ra
 .actions{display:flex;align-items:center;gap:8px}.menu-dot{width:44px;height:42px;border:1px solid rgba(227,173,84,.24);background:rgba(15,15,16,.86);border-radius:13px;display:grid;place-items:center;color:var(--gold2);font-size:23px}.lang,.back,.search input{background:rgba(18,18,18,.86);border:1px solid var(--line);color:var(--text);border-radius:14px}
 .lang,.back{padding:14px 26px;font-weight:900;font-size:18px;min-width:210px;min-height:58px;border-radius:17px;cursor:pointer}.back{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(145deg,#8a315f,#632345);box-shadow:0 10px 24px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.08)}.lang:hover,.back:hover{border-color:var(--gold);transform:translateY(-2px)}.back:active{transform:translateY(0) scale(.98)}
 .hero{text-align:center;padding:36px 0 26px}.hero .eyebrow{color:var(--gold);font-size:12px;letter-spacing:2.4px}.hero h2{margin:10px 0 6px;font-size:38px;color:var(--gold2);text-shadow:0 3px 20px rgba(214,168,92,.18)}.hero p{margin:0;color:#d6d0c8}
-.search{display:flex;justify-content:center;margin:0 auto 26px;max-width:680px}.search input{width:100%;padding:14px 18px;outline:none;text-align:right}.search input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(214,168,92,.08)}
-.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.cat{position:relative;aspect-ratio:1.42;border:1px solid var(--line);border-radius:21px;overflow:hidden;background:#131416;cursor:pointer;transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease;box-shadow:0 12px 30px rgba(0,0,0,.26)}
+.search{display:flex;justify-content:center;margin:0 auto 26px;max-width:680px}.search input{width:100%;padding:14px 18px;outline:none;text-align:right;font-family:inherit;font-size:16px;font-weight:600;line-height:1.7}.search input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(214,168,92,.08)}
+.search-results{display:none;flex-direction:column;gap:10px;margin:0 auto 24px;max-width:860px}.search-results.show{display:flex}.search-results-title{font-size:15px;font-weight:800;color:var(--gold2);padding:0 4px 4px}.search-result-list{display:flex;flex-direction:column;gap:10px}.search-result{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;padding:14px 16px;border:1px solid rgba(227,173,84,.20);border-radius:16px;background:linear-gradient(135deg,rgba(31,24,18,.86),rgba(15,16,17,.94));color:var(--text);cursor:pointer;text-align:right;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;font-family:inherit}.search-result:hover{transform:translateY(-2px);border-color:var(--gold);box-shadow:0 10px 26px rgba(0,0,0,.22)}.search-result-copy{min-width:0;flex:1}.search-result-name{font-size:17px;font-weight:800;line-height:1.6;color:#fff7e9}.search-result-cat{font-size:12px;font-weight:700;color:#d8c39d;margin-top:2px}.search-result-price{font-size:16px;font-weight:900;color:var(--gold2);white-space:nowrap}.search-empty{display:none;padding:14px 16px;border:1px dashed rgba(227,173,84,.24);border-radius:16px;color:#d2cbc0;text-align:center;font-size:14px;font-weight:700}.search-empty.show{display:block}.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.cat{position:relative;aspect-ratio:1.42;border:1px solid var(--line);border-radius:21px;overflow:hidden;background:#131416;cursor:pointer;transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease;box-shadow:0 12px 30px rgba(0,0,0,.26)}
 .cat::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 20%,rgba(4,5,6,.9) 100%)}.cat:hover{transform:translateY(-6px) scale(1.01);border-color:var(--gold);box-shadow:0 20px 42px rgba(0,0,0,.44),0 0 0 1px rgba(214,168,92,.08)}
 .cat img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.08) contrast(1.05);transition:transform .55s ease,filter .35s ease}.cat:hover img{transform:scale(1.08);filter:saturate(1.18) contrast(1.06)}
 .cat .caption{position:absolute;z-index:2;left:14px;right:14px;bottom:12px;padding:12px 14px;border:1px solid rgba(214,168,92,.24);border-radius:14px;background:rgba(7,8,9,.66);backdrop-filter:blur(8px);text-align:center}
@@ -47,6 +47,10 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;background:ra
   .brand-mark img{width:140px!important;height:94px!important}
   .page.show .back{position:sticky;top:8px;min-height:60px;width:100%;margin:10px 0 12px}
 }
+/* Search/font polish */
+body,.top,.hero,.search input,.cat,.caption,.page,.sectionInfo,.item,.cart,.cart-modal,.cart-sheet,.back,.add-to-cart{font-family:"Noto Sans Arabic","Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
+.hero h2,.sectionInfo h3,.cat .ar,.item .name{font-weight:800;letter-spacing:0}
+.cat .en,.item .price,.search-result-cat,.search-result-price{font-weight:700}
 </style></head>
 <body>
 <div class="wrap">
@@ -56,8 +60,8 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;background:ra
   </header>
   <main id="home">
     <section class="hero"><div class="eyebrow" id="eyebrow">LAMSET ALROH</div><h2 id="choose">اختر القسم الذي تريده</h2><p id="chooseEn">Choose Your Section</p></section>
-    <div class="search"><input id="search" placeholder="ابحث عن قسم..." autocomplete="off"></div>
-    <div class="categories" id="categories"></div>
+    <div class="search"><input id="search" placeholder="ابحث عن قسم أو صنف..." autocomplete="off"></div>
+    <div class="categories" id="categories"></div><div class="search-results" id="searchResults"><div class="search-results-title">الأصناف المطابقة</div><div class="search-result-list" id="searchResultList"></div><div class="search-empty" id="searchEmpty">ماكو صنف مطابق للبحث</div></div>
   </main>
   <main id="page" class="page">
     <button class="back" id="backBtn">← الأقسام</button>
@@ -79,14 +83,43 @@ let lang='ar', active=null;
 let cart=[];
 const $=id=>document.getElementById(id);
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function normalizeSearch(v){return String(v||'').trim().toLowerCase().replace(/[\u0640\s]+/g,' ')}
 function renderHome(filter='') {
-  const q=filter.trim().toLowerCase();
-  $('categories').innerHTML=DATA.filter(c=>!q || (c.ar+' '+c.en).toLowerCase().includes(q)).map(c=>`
+  const q=normalizeSearch(filter);
+  const catMatches=DATA.filter(c=>!q || normalizeSearch(c.ar+' '+c.en).includes(q));
+  const itemMatches=[];
+  if(q){
+    DATA.forEach(c=>c.items.forEach((x,i)=>{
+      if(normalizeSearch(x.ar).includes(q)) itemMatches.push({cat:c,item:x,index:i});
+    }));
+  }
+  $('categories').innerHTML=catMatches.map(c=>`
     <button class="cat" data-cat="${esc(c.ar)}">
       <img src="${c.img}" alt="">
       <div class="caption"><div class="ar">${esc(lang==='ar'?c.ar:c.en)}</div><div class="en">${esc(lang==='ar'?c.en:c.ar)}</div></div>
     </button>`).join('');
   document.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>openCat(b.dataset.cat));
+
+  const resultsBox=$('searchResults');
+  const resultList=$('searchResultList');
+  const empty=$('searchEmpty');
+  if(q){
+    resultsBox.classList.add('show');
+    resultList.innerHTML=itemMatches.map(r=>`
+      <button class="search-result" type="button" data-search-cat="${esc(r.cat.ar)}">
+        <div class="search-result-copy">
+          <div class="search-result-name">${esc(r.item.ar)}</div>
+          <div class="search-result-cat">${esc(r.cat.ar)}</div>
+        </div>
+        <div class="search-result-price">${esc(r.item.price)} د.ع</div>
+      </button>`).join('');
+    empty.classList.toggle('show', itemMatches.length===0);
+    document.querySelectorAll('[data-search-cat]').forEach(b=>b.onclick=()=>openCat(b.dataset.searchCat));
+  }else{
+    resultsBox.classList.remove('show');
+    resultList.innerHTML='';
+    empty.classList.remove('show');
+  }
 }
 function openCat(name) {
   active=DATA.find(c=>c.ar===name);
