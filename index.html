@@ -342,6 +342,62 @@ body:not(.page-open) #grid{display:none!important}
 body.page-open #grid{display:grid!important}
 body:not(.page-open) .category-hero{display:none!important}
 body.page-open .category-hero{display:grid!important}
+
+/* Exact reference-style presentation */
+html,body{background:radial-gradient(circle at 50% -10%,#281b10 0,#08090a 42%,#050607 100%)!important;color:#f8f3ea!important}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 20%,rgba(214,168,92,.08),transparent 25%),radial-gradient(circle at 85% 30%,rgba(120,65,25,.08),transparent 25%)}
+.container{width:min(1280px,94%);max-width:1280px;margin:auto;padding:22px 0 112px}
+.header{position:sticky;top:0;z-index:20;height:auto;min-height:82px;padding:7px 0 15px;border-radius:0!important;border:none!important;border-bottom:1px solid rgba(227,173,84,.24)!important;background:linear-gradient(180deg,rgba(9,9,10,.97),rgba(9,9,10,.82))!important;backdrop-filter:blur(14px);box-shadow:none!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:18px!important}
+.brand-copy{order:2!important;display:flex;align-items:center;gap:12px;padding:4px 12px 4px 7px;border-radius:18px;background:linear-gradient(135deg,rgba(38,25,14,.78),rgba(17,14,15,.72));border:1px solid rgba(227,173,84,.18);box-shadow:0 8px 25px rgba(0,0,0,.20);direction:rtl;text-align:right;flex:1}
+.brand-copy .badge,.brand-copy p,.brand-copy .table-pill{display:none!important}
+.brand-logo-wrap{order:0!important;display:flex;align-items:center;justify-content:center;width:104px!important;height:76px!important;position:relative;z-index:2}
+.brand-logo{width:104px!important;height:76px!important;object-fit:contain!important;display:block;border-radius:0!important;box-shadow:none!important}
+.header h1{margin:0!important;font-size:25px!important;color:#f4d58f!important;letter-spacing:.15px}
+.brand-copy::after{content:"LAMSET ALROH • RESTAURANT & CAFE";display:block;position:absolute;transform:translateY(27px);margin-right:116px;color:#e0cfad;font-size:10px;letter-spacing:1.15px}
+.header-actions{display:flex;align-items:center;gap:8px;order:3}
+.header-lang,.menu-btn{width:auto;height:42px;min-width:44px;border:1px solid rgba(227,173,84,.24);background:rgba(15,15,16,.86);color:#f4d58f;border-radius:13px;padding:0 13px;font-weight:800}
+.tools{display:flex!important;justify-content:center!important;align-items:center!important;margin:24px auto 0!important;max-width:680px!important}
+.search{width:100%!important;max-width:680px!important;flex:1}
+.search input{width:100%!important;padding:14px 18px!important;border:1px solid rgba(227,173,84,.30)!important;border-radius:14px!important;background:rgba(18,18,18,.86)!important;color:#f8f3ea!important;outline:none}
+.search input::placeholder{color:#aaa39b!important}
+.section-title{position:relative!important;display:block!important;text-align:center!important;margin:36px 0 26px!important;padding:0!important}
+.section-title .back-btn{position:absolute;left:0;top:0;display:none!important}
+body.page-open .section-title .back-btn{display:inline-flex!important}
+.section-title::before{content:"LAMSET ALROH";display:block;color:#e3ad54;font-size:12px;letter-spacing:2.4px;margin-bottom:6px}
+.section-title h2{margin:10px 0 6px!important;font-size:38px!important;color:#f4d58f!important;text-shadow:0 3px 20px rgba(214,168,92,.18)}
+.section-title small{margin:0;color:#d6d0c8!important;font-size:16px}
+.category-home{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:16px!important;margin-top:0!important;padding:0!important}
+.category-home .cat{position:relative!important;aspect-ratio:1.42!important;border:1px solid rgba(227,173,84,.30)!important;border-radius:21px!important;overflow:hidden!important;background:#131416!important;cursor:pointer;transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease;box-shadow:0 12px 30px rgba(0,0,0,.26)!important;padding:0!important}
+.category-home .cat::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 20%,rgba(4,5,6,.9) 100%)!important}
+.category-home .cat-photo{position:absolute;inset:0;background-image:url("/lamset-alroh-menu/assets/category-sprite.jpg?v=7");background-size:500% 400%;background-repeat:no-repeat;background-color:#131416;transform:scale(1.0);transition:transform .55s ease,filter .35s ease}
+.category-home .cat:hover{transform:translateY(-6px) scale(1.01);border-color:#e3ad54!important;box-shadow:0 20px 42px rgba(0,0,0,.44),0 0 0 1px rgba(214,168,92,.08)!important}
+.category-home .cat:hover .cat-photo{transform:scale(1.08);filter:saturate(1.18) contrast(1.06)}
+.category-home .caption{position:absolute;z-index:2;left:14px;right:14px;bottom:12px;padding:12px 14px;border:1px solid rgba(214,168,92,.24);border-radius:14px;background:rgba(7,8,9,.66);backdrop-filter:blur(8px);text-align:center}
+.category-home .caption .ar{font-size:21px;font-weight:900}.category-home .caption .en{font-size:12px;color:#e1d5bd;margin-top:3px}
+body.home-open .category-home{display:grid!important}body.home-open .category-hero,body.home-open #grid{display:none!important}
+body.page-open .category-home{display:none!important}body.page-open .category-hero{display:grid!important}body.page-open #grid{display:grid!important}
+.category-hero{display:grid;grid-template-columns:1.45fr 1fr;gap:18px;margin-top:14px;border-radius:24px;overflow:hidden;border:1px solid rgba(227,173,84,.30);background:linear-gradient(135deg,#15110c,#0d0f10);box-shadow:0 20px 50px rgba(0,0,0,.38)}
+.category-hero-image{min-height:360px;background-image:url("/lamset-alroh-menu/assets/category-sprite.jpg?v=7");background-size:500% 400%;background-repeat:no-repeat;background-color:#0d0f10}
+.category-hero-copy{padding:34px;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(145deg,rgba(52,31,13,.9),rgba(15,16,17,.96))}
+.category-hero-copy .eyebrow{color:#e3ad54;letter-spacing:2px;font-size:11px}.category-hero-copy h3{font-size:40px;color:#f4d58f;margin:9px 0 4px}.category-hero-copy p{color:#dbd3c9;line-height:1.8;margin:0}
+.card{background:linear-gradient(135deg,#0f1113,#151617)!important;border:1px solid rgba(214,168,92,.16)!important;border-radius:16px!important;color:#f8f3ea!important}.name{color:#fff!important}.desc{color:#aaa39b!important}.price{color:#f4d58f!important}.add{background:linear-gradient(145deg,#8a315f,#632345)!important;color:#fff1d0!important}
+.cart{position:fixed!important;right:18px!important;left:18px!important;bottom:16px!important;z-index:30!important;display:flex!important;justify-content:space-between!important;align-items:center!important;gap:14px!important;padding:12px 15px!important;border-radius:18px!important;border:1px solid rgba(227,173,84,.34)!important;background:linear-gradient(135deg,rgba(24,16,12,.96),rgba(15,15,16,.96))!important;box-shadow:0 16px 38px rgba(0,0,0,.42)!important}
+.cart button{border:1px solid rgba(227,173,84,.38)!important;background:linear-gradient(145deg,#8a315f,#632345)!important;color:#fff1d0!important;border-radius:13px!important;padding:9px 14px!important;font-weight:900!important}
+.footer{text-align:center!important;color:#8f8982!important;font-size:12px!important;padding-top:28px!important;margin-top:30px!important;border-top:1px solid rgba(227,173,84,.15)!important}
+@media(max-width:1000px){.category-home{grid-template-columns:repeat(3,1fr)!important}}
+@media(max-width:650px){
+ .container{width:min(96%,560px);padding-top:10px}.header{padding-top:8px}
+ .brand-logo-wrap{width:82px!important;height:60px!important}.brand-logo{width:82px!important;height:60px!important}
+ .brand-copy{padding:4px 8px!important}.header h1{font-size:18px!important}.brand-copy::after{font-size:8px;transform:translateY(22px);margin-right:92px}
+ .header-actions{gap:5px}.header-lang{height:38px;min-width:58px;font-size:12px}.menu-btn{height:38px;width:38px;min-width:38px;font-size:20px}
+ .tools{margin-top:20px!important}.search input{padding:12px 15px!important}
+ .section-title{margin:26px 0 18px!important}.section-title h2{font-size:28px!important}
+ .category-home{grid-template-columns:repeat(2,1fr)!important;gap:10px!important}
+ .category-home .cat{border-radius:17px!important}.category-home .caption{left:8px;right:8px;bottom:8px;padding:9px 6px}.category-home .caption .ar{font-size:16px}.category-home .caption .en{font-size:10px}
+ .category-hero{grid-template-columns:1fr!important}.category-hero-image{min-height:250px}.category-hero-copy{padding:22px}.category-hero-copy h3{font-size:29px}
+ .item{padding:14px}.item .name{font-size:15px}.item .price{font-size:16px}
+}
+
 </style>
 </head>
 <body>
@@ -370,7 +426,28 @@ body.page-open .category-hero{display:grid!important}
       <h2 id="sectionTitle">أقسام المنيو</h2>
       <small id="countText"></small>
     </div>
-    <div class="category-home" id="categoryHome"></div>
+    <div class="category-home" id="categoryHome">
+<button class="cat" data-open-cat="الشاورما" type="button"><div class="cat-photo" style="background-position:0% 0%"></div><div class="caption"><div class="ar">الشاورما</div><div class="en">Shawarma</div></div></button>
+<button class="cat" data-open-cat="المشاوي" type="button"><div class="cat-photo" style="background-position:25% 0%"></div><div class="caption"><div class="ar">المشاوي</div><div class="en">Grills</div></div></button>
+<button class="cat" data-open-cat="المطبخ الشرقي" type="button"><div class="cat-photo" style="background-position:50% 0%"></div><div class="caption"><div class="ar">المطبخ الشرقي</div><div class="en">Eastern Kitchen</div></div></button>
+<button class="cat" data-open-cat="البيتزا" type="button"><div class="cat-photo" style="background-position:75% 0%"></div><div class="caption"><div class="ar">البيتزا</div><div class="en">Pizza</div></div></button>
+<button class="cat" data-open-cat="حلا بارد" type="button"><div class="cat-photo" style="background-position:0% 33.333%"></div><div class="caption"><div class="ar">حلا بارد</div><div class="en">Cold Desserts</div></div></button>
+<button class="cat" data-open-cat="العصائر والمشروبات" type="button"><div class="cat-photo" style="background-position:25% 33.333%"></div><div class="caption"><div class="ar">العصائر والمشروبات</div><div class="en">Juices &amp; Drinks</div></div></button>
+<button class="cat" data-open-cat="الاراكيل" type="button"><div class="cat-photo" style="background-position:50% 33.333%"></div><div class="caption"><div class="ar">الاراكيل</div><div class="en">Shisha</div></div></button>
+<button class="cat" data-open-cat="المكسرات" type="button"><div class="cat-photo" style="background-position:75% 33.333%"></div><div class="caption"><div class="ar">المكسرات</div><div class="en">Nuts</div></div></button>
+<button class="cat" data-open-cat="السناكات" type="button"><div class="cat-photo" style="background-position:100% 0%"></div><div class="caption"><div class="ar">السندويجات</div><div class="en">Sandwiches</div></div></button>
+<button class="cat" data-open-cat="الكريب و الوافل" type="button"><div class="cat-photo" style="background-position:100% 33.333%"></div><div class="caption"><div class="ar">الكريب و الوافل</div><div class="en">Crepe &amp; Waffles</div></div></button>
+<button class="cat" data-open-cat="بان كيك" type="button"><div class="cat-photo" style="background-position:0% 66.666%"></div><div class="caption"><div class="ar">بان كيك</div><div class="en">Pancakes</div></div></button>
+<button class="cat" data-open-cat="الايس كريم" type="button"><div class="cat-photo" style="background-position:25% 66.666%"></div><div class="caption"><div class="ar">آيس كريم</div><div class="en">Ice Cream</div></div></button>
+<button class="cat" data-open-cat="المشروبات الغازية" type="button"><div class="cat-photo" style="background-position:75% 66.666%"></div><div class="caption"><div class="ar">المشروبات الغازية</div><div class="en">Soft Drinks</div></div></button>
+<button class="cat" data-open-cat="المشروبات الساخنة" type="button"><div class="cat-photo" style="background-position:100% 66.666%"></div><div class="caption"><div class="ar">المشروبات الساخنة</div><div class="en">Hot Drinks</div></div></button>
+<button class="cat" data-open-cat="ايس كوفي" type="button"><div class="cat-photo" style="background-position:0% 100%"></div><div class="caption"><div class="ar">ايس كوفي</div><div class="en">Iced Coffee</div></div></button>
+<button class="cat" data-open-cat="سموذي" type="button"><div class="cat-photo" style="background-position:25% 100%"></div><div class="caption"><div class="ar">سموذي</div><div class="en">Smoothies</div></div></button>
+<button class="cat" data-open-cat="ميلك شيك" type="button"><div class="cat-photo" style="background-position:50% 100%"></div><div class="caption"><div class="ar">ميلك شيك</div><div class="en">Milkshakes</div></div></button>
+<button class="cat" data-open-cat="الاراكيل الطبيعية" type="button"><div class="cat-photo" style="background-position:100% 100%"></div><div class="caption"><div class="ar">الاراكيل الطبيعية</div><div class="en">Natural Hookahs</div></div></button>
+<button class="cat" data-open-cat="الموهيتو" type="button"><div class="cat-photo" style="background-position:50% 66.666%"></div><div class="caption"><div class="ar">الموهيتو</div><div class="en">Mojito</div></div></button>
+<button class="cat" data-open-cat="فواكة" type="button"><div class="cat-photo" style="background-position:75% 66.666%"></div><div class="caption"><div class="ar">فواكة</div><div class="en">Fruits</div></div></button>
+  </div>
     <div class="category-hero" id="categoryHero" hidden>
       <div class="category-hero-image" id="categoryHeroImage"></div>
       <div class="category-hero-copy">
@@ -623,6 +700,10 @@ const params=new URLSearchParams(window.location.search);
 const table=englishDigits(params.get('table')||params.get('t')||'');
 
 const $=id=>document.getElementById(id);
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-open-cat]');
+  if(b) openCategory(b.dataset.openCat);
+});
 function escapeHtml(value){
   return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 }
