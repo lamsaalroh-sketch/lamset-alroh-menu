@@ -623,6 +623,9 @@ const params=new URLSearchParams(window.location.search);
 const table=englishDigits(params.get('table')||params.get('t')||'');
 
 const $=id=>document.getElementById(id);
+function escapeHtml(value){
+  return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
 const grid=$('grid'), search=$('search'), modal=$('modal');
 
 function fmt(n){return Number(n||0).toLocaleString('en-US')}
