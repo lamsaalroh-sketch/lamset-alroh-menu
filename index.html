@@ -334,6 +334,14 @@ body{background:radial-gradient(circle at 15% 5%,rgba(111,75,34,.14),transparent
 @media(max-width:560px){
 .container{padding:10px 10px 94px}.header{height:86px;min-height:86px;top:6px;padding:8px;border-radius:9px}.brand-logo-wrap{left:7px;top:7px;width:72px;height:69px}.brand-logo{width:68px}.brand-copy{left:88px;right:114px;top:14px}.header h1{font-size:18px}.header h1::after{font-size:7px;letter-spacing:.7px;margin-top:3px}.header-actions{right:7px;gap:4px}.header-lang{height:35px;min-width:56px;font-size:11px;padding:0 7px}.menu-btn{height:35px;width:35px;min-width:35px;font-size:18px}.tools{margin:21px auto 8px}.search input{height:43px;font-size:13px}.section-title{margin:21px 0 14px}.section-title h2{font-size:28px}.section-title small{font-size:13px}.category-home{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.category-card{min-height:180px!important;border-radius:15px}.category-card .category-name{font-size:16px!important;left:8px;right:8px;bottom:8px;padding:8px!important}
 }
+
+/* Category grid visibility guard: homepage and section view never overlap */
+body:not(.page-open) .category-home{display:grid!important}
+body.page-open .category-home{display:none!important}
+body:not(.page-open) #grid{display:none!important}
+body.page-open #grid{display:grid!important}
+body:not(.page-open) .category-hero{display:none!important}
+body.page-open .category-hero{display:grid!important}
 </style>
 </head>
 <body>
@@ -636,6 +644,14 @@ const CATEGORY_EN={
   'ايس كوفي':'Iced Coffee','سموذي':'Smoothies','ميلك شيك':'Milkshakes','الاراكيل':'Hookahs','الاراكيل الطبيعية':'Natural Hookahs',
   'الموهيتو':'Mojito','المكسرات':'Nuts','فواكة':'Fruits'
 };
+const CATEGORY_DISPLAY_ORDER=[
+  'الشاورما','المشاوي','المطبخ الشرقي','البيتزا',
+  'حلا بارد','العصائر والمشروبات','الاراكيل','المكسرات',
+  'السناكات','الكريب و الوافل','بان كيك','الايس كريم',
+  'المشروبات الغازية','المشروبات الساخنة','ايس كوفي','سموذي',
+  'ميلك شيك','الاراكيل الطبيعية','الموهيتو','فواكة'
+];
+const CATEGORY_DISPLAY_NAME={'السناكات':'السندويجات'};
 const CATEGORY_POS={
   'الشاورما':'0% 0%','المشاوي':'25% 0%','المطبخ الشرقي':'50% 0%','البيتزا':'75% 0%','السناكات':'100% 0%',
   'حلا بارد':'0% 33.333%','العصائر والمشروبات':'25% 33.333%','الاراكيل':'50% 33.333%','المكسرات':'75% 33.333%','الكريب و الوافل':'100% 33.333%',
@@ -671,10 +687,14 @@ function openCategory(c){
 function renderCategoryHome(){
   const home=$('categoryHome');
   if(!home) return;
-  home.innerHTML=cats.filter(c=>c!=='الكل').map(c=>`<button class="category-card" data-open-cat="${escapeHtml(c)}" type="button" aria-label="${escapeHtml(categoryLabel(c))}">
-    <div class="category-visual" style="background-image:url("${CATEGORY_SPRITE}");background-size:500% 400%;background-position:${CATEGORY_POS[c]||'center center'}"></div>
-    <div class="category-name">${escapeHtml(categoryLabel(c))}<span class="category-en">${escapeHtml(lang==='ar'?(CATEGORY_EN[c]||''):(c||''))}</span></div>
-  </button>`).join('');
+  const ordered=CATEGORY_DISPLAY_ORDER.filter(c=>cats.includes(c));
+  home.innerHTML=ordered.map(c=>{
+    const displayName=CATEGORY_DISPLAY_NAME[c]||c;
+    return `<button class="category-card" data-open-cat="${escapeHtml(c)}" type="button" aria-label="${escapeHtml(categoryLabel(c))}">
+      <div class="category-visual" style="background-image:url("${CATEGORY_SPRITE}");background-size:500% 400%;background-position:${CATEGORY_POS[c]||'center center'}"></div>
+      <div class="category-name">${escapeHtml(lang==='ar'?displayName:(CATEGORY_EN[c]||displayName))}<span class="category-en">${escapeHtml(lang==='ar'?(CATEGORY_EN[c]||''):(displayName||''))}</span></div>
+    </button>`;
+  }).join('');
   home.querySelectorAll('[data-open-cat]').forEach(b=>b.addEventListener('click',()=>openCategory(b.dataset.openCat)));
 }
 function renderCategoryHero(){
