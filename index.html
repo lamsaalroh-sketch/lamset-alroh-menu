@@ -152,7 +152,7 @@ function updateCartUI(){
 function openCart(){ $('cartModal').classList.add('show'); $('cartModal').setAttribute('aria-hidden','false'); updateCartUI(); }
 function closeCart(){ $('cartModal').classList.remove('show'); $('cartModal').setAttribute('aria-hidden','true'); }
 $('viewCart').onclick=openCart; $('cartClose').onclick=closeCart; $('cartModal').onclick=e=>{if(e.target.id==='cartModal')closeCart();};
-function backHome(){active=null;$('page').classList.remove('show');$('home').style.display='block';window.scrollTo(0,0)}
+function backHome(){active=null;$('page').classList.remove('show');$('home').style.display='block';$('search').value='';renderHome('');window.scrollTo(0,0)}
 $('backBtn').onclick=backHome;
 $('search').oninput=e=>{if(!active)renderHome(e.target.value)};
 if($('langBtn'))$('langBtn').onclick=()=>{lang=lang==='ar'?'en':'ar';document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';$('langBtn').textContent=lang==='ar'?'English':'العربية';$('choose').textContent=lang==='ar'?'اختر القسم الذي تريده':'Choose Your Section';$('chooseEn').textContent=lang==='ar'?'Choose Your Section':'اختر القسم الذي تريده';$('footer').textContent=lang==='ar'?'أكثر من مجرد وجبة .. إنها لمسة روح':'More than a meal .. it is a touch of soul'; if(active)openCat(active.ar); else renderHome($('search').value)};
