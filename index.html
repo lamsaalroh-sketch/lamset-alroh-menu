@@ -119,6 +119,19 @@ button,input{font:inherit} button{cursor:pointer}
 @keyframes cardsIn{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
 @media(max-width:850px){.category-home{grid-template-columns:repeat(3,minmax(0,1fr))}.category-hero{grid-template-columns:1fr}.category-hero-image{min-height:210px}}
 @media(max-width:560px){.category-home{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.category-card{min-height:160px}.category-card .category-name{font-size:16px;bottom:10px;right:9px;left:9px;padding:9px}.category-hero{margin-top:2px;border-radius:20px}.category-hero-image{min-height:185px}.category-hero-copy{padding:20px}.category-hero-copy h3{font-size:25px}.back-btn{width:100%;min-height:54px;font-size:17px;border-radius:17px;margin-bottom:8px}}
+/* FINAL LUXURY THEME */
+.header{position:sticky;top:10px;z-index:50;min-height:170px;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:28px;border:1px solid rgba(214,170,82,.42);border-radius:24px;overflow:hidden;background:radial-gradient(circle at 18% 45%,rgba(101,23,62,.16),transparent 28%),linear-gradient(135deg,#050505 0%,#0d0d0d 58%,#141414 100%);color:#fff;box-shadow:0 18px 42px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.04)}
+.header::after{content:"";position:absolute;inset:auto 0 0;height:1px;background:linear-gradient(90deg,transparent,#d6aa52 18%,#fff0c2 50%,#d6aa52 82%,transparent);opacity:.7}
+.brand-copy{order:1;flex:1;min-width:0;position:relative;z-index:3}.brand-logo-wrap{order:2;flex:0 0 300px;display:flex;align-items:center;justify-content:flex-start;position:relative;z-index:4}.brand-logo{width:300px;max-width:100%;height:auto;display:block;border-radius:18px;box-shadow:0 10px 28px rgba(0,0,0,.26)}
+.badge{background:rgba(214,170,82,.13);border:1px solid rgba(214,170,82,.36);color:#f0d28a}.header h1{color:#fff;font-size:42px}.header p{color:#f2eee7}
+.lang{background:#080808;color:#f2d58e;border:1px solid rgba(214,170,82,.55)}.search input{background:#0c0c0c;border-color:rgba(214,170,82,.38);color:#fff}.search input::placeholder{color:#a69e91}
+.categories{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;padding:18px 0 6px}.category-card{min-height:215px;border:1px solid rgba(214,170,82,.52);background:#090909;border-radius:22px;box-shadow:0 14px 30px rgba(0,0,0,.28)}
+.category-card::after{background:linear-gradient(180deg,rgba(0,0,0,.02) 12%,rgba(0,0,0,.78) 100%)}.category-card .category-name{background:linear-gradient(180deg,rgba(3,3,3,.25),rgba(3,3,3,.82));border-color:rgba(214,170,82,.24);color:#fff}.category-card .category-en{color:#f0d28a}.category-visual{background-color:#0b0b0b!important;background-repeat:no-repeat!important}
+.section-title h2{color:#e9c776}.category-hero{grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);min-height:340px;border-color:rgba(214,170,82,.42);background:linear-gradient(135deg,#080808,#131313);box-shadow:0 18px 38px rgba(0,0,0,.32)}.category-hero-image{min-height:340px;background-color:#090909;background-repeat:no-repeat}.category-hero-copy{background:linear-gradient(145deg,#0a0a0a,#151515);border-right:1px solid rgba(214,170,82,.16)}
+.category-hero-copy h3{color:#f0d28a}.category-hero-copy .eyebrow{color:#d6aa52}.category-hero-copy p{color:#f1ece4}.back-btn{min-width:185px;min-height:56px;padding:14px 24px;background:linear-gradient(135deg,#d6aa52,#f0d28a);color:#0b0b0b;border-color:#f0d28a;box-shadow:0 12px 26px rgba(214,170,82,.22),inset 0 1px 0 rgba(255,255,255,.48)}
+.card{background:linear-gradient(145deg,#111,#171717);border-color:rgba(214,170,82,.18)}.name{color:#fff}.desc{color:#b8b0a4}.price{color:#f0d28a}.add{background:#d6aa52;color:#0b0b0b}.cart{background:#090909;border:1px solid rgba(214,170,82,.46);box-shadow:0 16px 36px rgba(0,0,0,.34)}.cart button{background:#d6aa52;color:#0b0b0b}.footer{color:#b8ae9d;border-color:rgba(214,170,82,.2)}
+@media(max-width:850px){.header{min-height:150px;padding:20px;gap:18px}.brand-logo-wrap{flex-basis:240px}.brand-logo{width:240px}.header h1{font-size:34px}.categories{grid-template-columns:repeat(3,minmax(0,1fr))}.category-card{min-height:205px}.category-hero{grid-template-columns:1fr}.category-hero-image{min-height:290px}}
+@media(max-width:560px){.header{position:sticky;top:6px;min-height:170px;padding:16px 14px;border-radius:20px;display:flex;flex-direction:column;text-align:center}.brand-logo-wrap{order:1;flex:0 0 auto;justify-content:center;width:100%}.brand-logo{width:220px}.brand-copy{order:2}.header h1{font-size:28px;margin-top:8px}.header p{font-size:13px}.tools{order:3;width:100%;justify-content:center;margin-top:2px}.tools .search{min-width:0;width:100%}.lang{margin-inline:auto}.categories{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;padding-top:14px}.category-card{min-height:190px;border-radius:18px}.category-hero{min-height:auto}.category-hero-image{min-height:260px}.category-hero-copy{padding:22px}.back-btn{width:100%;min-width:0;min-height:56px;font-size:17px;margin-bottom:10px}}
 </style>
 </head>
 <body>
@@ -411,43 +424,19 @@ function saveCart(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(cart))}c
 function normalizeCart(){cart=cart.filter(c=>safeItems().some(i=>String(i.id)===String(c.id)));saveCart()}
 
 const CATEGORY_EN={
-  'المطبخ الشرقي':'Eastern Kitchen','المشاوي':'Grills','الشاورما':'Shawarma','السناكات':'Snacks',
-  'حلا بارد':'Cold Desserts','بان كيك':'Pancakes','الكريب و الوافل':'Crepe & Waffles','البيتزا':'Pizza',
-  'الايس كريم':'Ice Cream','المشروبات الغازية':'Soft Drinks','المشروبات الساخنة':'Hot Drinks',
-  'العصائر والمشروبات':'Juices & Drinks','ايس كوفي':'Iced Coffee','سموذي':'Smoothies',
-  'ميلك شيك':'Milkshakes','الاراكيل':'Hookahs','الاراكيل الطبيعية':'Natural Hookahs',
+  'المطبخ الشرقي':'Eastern Kitchen','المشاوي':'Grills','الشاورما':'Shawarma','السناكات':'Snacks','حلا بارد':'Cold Desserts',
+  'بان كيك':'Pancakes','الكريب و الوافل':'Crepe & Waffles','البيتزا':'Pizza','الايس كريم':'Ice Cream',
+  'المشروبات الغازية':'Soft Drinks','المشروبات الساخنة':'Hot Drinks','العصائر والمشروبات':'Juices & Drinks',
+  'ايس كوفي':'Iced Coffee','سموذي':'Smoothies','ميلك شيك':'Milkshakes','الاراكيل':'Hookahs','الاراكيل الطبيعية':'Natural Hookahs',
   'الموهيتو':'Mojito','المكسرات':'Nuts','فواكة':'Fruits'
 };
-const CATEGORY_IMG={
-  'المطبخ الشرقي':'https://b.zmtcdn.com/data/collections/4702ab898a653b1ac20d69bed4357621_1683178377.png',
-  'المشاوي':'https://images.pexels.com/photos/28902905/pexels-photo-28902905.jpeg?cs=srgb&dl=pexels-pedrofurtadoo-28902905.jpg&fm=jpg',
-  'الشاورما':'https://arabiantaste.is/assets/harvested/a-plate-of-chicken-and-lamb-shawarma-with-appetizers-2.jpg',
-  'السناكات':'https://images.rawpixel.com/image_social_landscape/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTEwL2Rlc2lnbndpdGhtZTA5X2FfcmVhbGlzdGljX3Bob3RvX29mX2p1aWN5X2J1cmdlcl9hbmRfY3Jpc3B5X2ZyaVlfOWEzNDcxNzMtMmE3Zi00MmE4LTllNTgtNmM2Y2IwNTY5ZTFiXzEuanBn.jpg',
-  'حلا بارد':'https://i.fbcd.co/products/resized/resized-750-500/c-1000-designbundle-piece-cheesecake-berries-2-09-06-87469321a4b1286460a40dd5109b5531c3c23d64f4ba76e513e32610be91a959.jpg',
-  'بان كيك':'https://bodenaturkost.cstatic.com/media/df/81/e7/1768468811/Ahornsirup-Pancakes.jpg?ts=1769610752',
-  'الكريب و الوافل':'https://snapcalorie-webflow-website.s3.us-east-2.amazonaws.com/media/food_pics_v2/medium/chocolate_crepe.jpg',
-  'البيتزا':'https://images.unsplash.com/photo-1571757392712-7c1052de7ce5?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=1400',
-  'الايس كريم':'https://photographicdictionary.com/images/idioms/cherryontop.jpg',
-  'المشروبات الغازية':'https://images.pexels.com/photos/8879617/pexels-photo-8879617.jpeg?cs=srgb&dl=pexels-ron-lach-8879617.jpg&fm=jpg',
-  'المشروبات الساخنة':'https://tblg.k-img.com/restaurant/images/Rvw/245451/065a9a11cb7700b013be00d225bbb1ca.jpg',
-  'العصائر والمشروبات':'https://kanizsamediahaz.hu/sites/all/files/styles/torzskep/public/images/news/bev/2024-10/assortment-of-fruit-juices-2023-11-27-05-05-50-utc.jpg?itok=q6TXG_8X',
-  'ايس كوفي':'https://marecoffeebakery.com/resimler/proje/b/ice-mocha9.jpg',
-  'سموذي':'https://images.pexels.com/photos/33459858/pexels-photo-33459858.jpeg?cs=srgb&dl=pexels-khezez-33459858.jpg&fm=jpg',
-  'ميلك شيك':'https://images.squarespace-cdn.com/content/v1/640b11a09b04ab69b274fdaf/f3cdae7c-7697-4055-93cd-99618494946e/DSC_3693%2B-small.jpg',
-  'الاراكيل':'https://cdn.shopify.com/s/files/1/0364/1370/2282/files/Understanding_Hookah_Tobacco.jpg?v=1723700879',
-  'الاراكيل الطبيعية':'https://cdn.shopify.com/s/files/1/0364/1370/2282/files/Understanding_Hookah_Tobacco.jpg?v=1723700879',
-  'الموهيتو':'https://image.essen-und-trinken.de/11856240/t/Tz/v8/w960/r1/-/mojito-b30091f3a4628f7e22bc28b4a31e559d-mojito-jpg--21379-.jpg',
-  'المكسرات':'https://www.nutnutshop.com/cdn/shop/files/55_CORAZON_MIXjul._14_2025.jpg?v=1752663237&width=2048',
-  'فواكة':'https://rare-gallery.com/thumbs/759132-Fruit-Grapes-Strawberry-Melons.jpg'
-}
-
 const CATEGORY_POS={
-  'المطبخ الشرقي':'center center','المشاوي':'center center','الشاورما':'center center','السناكات':'center center',
-  'حلا بارد':'center 45%','بان كيك':'center 48%','الكريب و الوافل':'center 50%','البيتزا':'center center','الايس كريم':'center 50%',
-  'المشروبات الغازية':'center 50%','المشروبات الساخنة':'center center','العصائر والمشروبات':'center center','ايس كوفي':'center 50%',
-  'سموذي':'center 58%','ميلك شيك':'center 45%','الاراكيل':'center 52%','الاراكيل الطبيعية':'center 50%','الموهيتو':'center 50%',
-  'المكسرات':'center 50%','فواكة':'center 50%'
+  'الشاورما':'0% 0%','المشاوي':'25% 0%','المطبخ الشرقي':'50% 0%','البيتزا':'75% 0%','السناكات':'100% 0%',
+  'حلا بارد':'0% 33.333%','العصائر والمشروبات':'25% 33.333%','الاراكيل':'50% 33.333%','المكسرات':'75% 33.333%','الكريب و الوافل':'100% 33.333%',
+  'بان كيك':'0% 66.666%','الايس كريم':'25% 66.666%','الموهيتو':'50% 66.666%','فواكة':'75% 66.666%','المشروبات الساخنة':'100% 66.666%',
+  'ايس كوفي':'0% 100%','سموذي':'25% 100%','ميلك شيك':'50% 100%','المشروبات الغازية':'75% 100%','الاراكيل الطبيعية':'100% 100%'
 };
+const CATEGORY_SPRITE='/lamset-alroh-menu/assets/category-sprite.jpg?v=2';
 function categoryLabel(c){return lang==='ar'?c:(CATEGORY_EN[c]||c)}
 function openCategory(c){
   active=c;
@@ -462,18 +451,18 @@ function openCategory(c){
 }
 function renderCategoryHome(){
   const home=$('categoryHome');
-  home.innerHTML=cats.filter(c=>c!=='الكل').map(c=>`<button class="category-card" data-open-cat="${escapeHtml(c)}" type="button" aria-label="${escapeHtml(categoryLabel(c))}">
-    <div class="category-visual" style="background-image:url("${CATEGORY_IMG[c]||''}");background-position:${CATEGORY_POS[c]||'center center'}"></div>
-    <div class="category-name">${escapeHtml(categoryLabel(c))}<span class="category-en">${escapeHtml(lang==='ar'?(CATEGORY_EN[c]||''):(c||''))}</span></div>
-  </button>`).join('');
+  home.innerHTML=cats.filter(c=>c!=='الكل').map(c=>`<button class="category-card" data-open-cat="${escapeHtml(c)}" type="button" aria-label="${escapeHtml(categoryLabel(c))}">`+
+    `<div class="category-visual" style="background-image:url("${CATEGORY_SPRITE}");background-size:500% 400%;background-position:${CATEGORY_POS[c]||'center center'}"></div>`+
+    `<div class="category-name">${escapeHtml(categoryLabel(c))}<span class="category-en">${escapeHtml(lang==='ar'?(CATEGORY_EN[c]||''):(c||''))}</span></div>`+
+  `</button>`).join('');
   home.querySelectorAll('[data-open-cat]').forEach(b=>b.addEventListener('click',()=>openCategory(b.dataset.openCat)));
-}
+};
 function renderCategoryHero(){
   const hero=$('categoryHero');
   if(active==='الكل'){hero.hidden=true;return}
-  const image=CATEGORY_IMG[active]||'';
   hero.hidden=false;
-  $('categoryHeroImage').style.backgroundImage=image?`url("${image}")`:'';
+  $('categoryHeroImage').style.backgroundImage=`url("${CATEGORY_SPRITE}")`;
+  $('categoryHeroImage').style.backgroundSize='500% 400%';
   $('categoryHeroImage').style.backgroundPosition=CATEGORY_POS[active]||'center center';
   $('heroTitle').textContent=categoryLabel(active);
   $('heroDescription').textContent=lang==='ar'?`اختيارات ${active} من منيو مطعم وكافيه لمسة الروح.`:`Selected ${categoryLabel(active)} from Lamset Alroh Restaurant & Cafe.`;
