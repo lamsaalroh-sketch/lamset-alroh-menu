@@ -260,6 +260,54 @@ main#home{display:block}.hero{padding:22px 0 12px!important}.hero .eyebrow{color
 @media(max-width:650px){
   .cat-photo{flex-basis:82px!important;width:82px!important;height:60px!important;border-radius:11px!important}
 }
+/* CATEGORY PAGE HERO IMAGE POLISH */
+.sectionHead{
+  grid-template-columns:1.55fr .85fr!important;
+  align-items:stretch!important;
+  min-height:360px!important;
+  background:#fffdfc!important;
+  border-radius:26px!important;
+  overflow:hidden!important;
+}
+.sectionImage{
+  min-height:360px!important;
+  background-size:cover!important;
+  background-position:center!important;
+  background-repeat:no-repeat!important;
+  position:relative!important;
+}
+.sectionImage::after{
+  background:linear-gradient(90deg,rgba(63,22,46,.02),rgba(63,22,46,.08))!important;
+}
+.sectionInfo{
+  min-height:360px!important;
+  justify-content:center!important;
+  align-items:flex-start!important;
+  text-align:right!important;
+  background:linear-gradient(145deg,#fffdfc 0%,#f7ecef 100%)!important;
+}
+.sectionInfo h3{
+  font-size:42px!important;
+  font-weight:900!important;
+  line-height:1.25!important;
+}
+.sectionInfo .eyebrow{
+  font-size:12px!important;
+  font-weight:800!important;
+}
+@media(max-width:650px){
+  .sectionHead{
+    min-height:unset!important;
+    grid-template-columns:1fr!important;
+  }
+  .sectionImage{
+    min-height:255px!important;
+    height:255px!important;
+  }
+  .sectionInfo{
+    min-height:unset!important;
+  }
+}
 </style></head>
 <body>
 <div class="wrap">
