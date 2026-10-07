@@ -13,7 +13,7 @@ button,input{font:inherit} button{cursor:pointer}
 .container{max-width:1100px;margin:auto;padding:24px 18px 110px}
 .header{position:relative;border-radius:28px;overflow:hidden;min-height:265px;background:radial-gradient(circle at 78% 35%,rgba(239,220,228,.28),transparent 35%),linear-gradient(135deg,#481939,#70234f 55%,#8a4d6d);color:#fff;padding:30px 34px;display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:28px;align-items:center;box-shadow:var(--shadow)}
 .badge{display:inline-flex;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.16);backdrop-filter:blur(6px);font-size:13px}.header h1{font-size:42px;margin:12px 0 6px;letter-spacing:-1px}.header p{margin:0;color:#f1e5eb;max-width:650px;line-height:1.7}
-.brand-logo-wrap{display:flex;align-items:center;justify-content:center;order:2;position:relative;z-index:2}.brand-logo{width:250px;height:auto;max-width:100%;display:block;border-radius:18px;box-shadow:0 12px 28px rgba(0,0,0,.18)}.brand-copy{order:1;position:relative;z-index:3;min-width:0}
+.brand-logo-wrap{display:flex;align-items:center;justify-content:center;order:2;position:relative;z-index:2}.brand-logo{width:250px;height:auto;max-width:100%;display:block;border-radius:18px;box-shadow:0 12px 28px rgba(0,0,0,.18)}.brand-copy{direction:rtl;text-align:right;order:2;position:relative;z-index:3;min-width:0}
 .tools{display:flex;gap:12px;align-items:center;margin-top:20px;flex-wrap:wrap}.search{flex:1;min-width:240px;position:relative}.search input{width:100%;padding:15px 45px 15px 16px;border:1px solid var(--line);border-radius:16px;background:#fff;outline:none}.search span{position:absolute;right:15px;top:12px;font-size:22px;color:var(--muted)}
 .lang{border:1px solid var(--line);background:#fff;border-radius:16px;padding:14px 16px;color:var(--ink)}
 .categories{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:14px 0 4px}.cat{white-space:nowrap;border:1px solid var(--line);background:linear-gradient(180deg,#fff8fb,#f8edf3);padding:11px 16px;border-radius:14px;color:#63334f;font-weight:700;box-shadow:0 4px 10px rgba(72,25,57,.05);transition:.18s ease}.cat:hover{border-color:#c99ab0;transform:translateY(-1px);box-shadow:0 7px 16px rgba(72,25,57,.08)}.cat.active{background:linear-gradient(135deg,#5f173e,#8a3565);border-color:#5f173e;color:#fff;box-shadow:0 9px 20px rgba(95,23,62,.22);font-weight:900}
@@ -120,9 +120,9 @@ button,input{font:inherit} button{cursor:pointer}
 @media(max-width:850px){.category-home{grid-template-columns:repeat(3,minmax(0,1fr))}.category-hero{grid-template-columns:1fr}.category-hero-image{min-height:210px}}
 @media(max-width:560px){.category-home{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.category-card{min-height:160px}.category-card .category-name{font-size:16px;bottom:10px;right:9px;left:9px;padding:9px}.category-hero{margin-top:2px;border-radius:20px}.category-hero-image{min-height:185px}.category-hero-copy{padding:20px}.category-hero-copy h3{font-size:25px}.back-btn{width:100%;min-height:54px;font-size:17px;border-radius:17px;margin-bottom:8px}}
 /* FINAL LUXURY THEME */
-.header{position:sticky;top:10px;z-index:50;min-height:170px;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:28px;border:1px solid rgba(214,170,82,.42);border-radius:24px;overflow:hidden;background:radial-gradient(circle at 18% 45%,rgba(101,23,62,.16),transparent 28%),linear-gradient(135deg,#050505 0%,#0d0d0d 58%,#141414 100%);color:#fff;box-shadow:0 18px 42px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.04)}
+.header{direction:ltr;position:sticky;top:10px;z-index:50;min-height:170px;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:28px;border:1px solid rgba(214,170,82,.42);border-radius:24px;overflow:hidden;background:radial-gradient(circle at 18% 45%,rgba(101,23,62,.16),transparent 28%),linear-gradient(135deg,#050505 0%,#0d0d0d 58%,#141414 100%);color:#fff;box-shadow:0 18px 42px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.04)}
 .header::after{content:"";position:absolute;inset:auto 0 0;height:1px;background:linear-gradient(90deg,transparent,#d6aa52 18%,#fff0c2 50%,#d6aa52 82%,transparent);opacity:.7}
-.brand-copy{order:1;flex:1;min-width:0;position:relative;z-index:3}.brand-logo-wrap{order:2;flex:0 0 300px;display:flex;align-items:center;justify-content:flex-start;position:relative;z-index:4}.brand-logo{width:300px;max-width:100%;height:auto;display:block;border-radius:18px;box-shadow:0 10px 28px rgba(0,0,0,.26)}
+.brand-copy{order:1;flex:1;min-width:0;position:relative;z-index:3}.brand-logo-wrap{order:1;flex:0 0 300px;display:flex;align-items:center;justify-content:flex-start;position:relative;z-index:4}.brand-logo{width:300px;max-width:100%;height:auto;display:block;border-radius:18px;box-shadow:0 10px 28px rgba(0,0,0,.26)}
 .badge{background:rgba(214,170,82,.13);border:1px solid rgba(214,170,82,.36);color:#f0d28a}.header h1{color:#fff;font-size:42px}.header p{color:#f2eee7}
 .lang{background:#080808;color:#f2d58e;border:1px solid rgba(214,170,82,.55)}.search input{background:#0c0c0c;border-color:rgba(214,170,82,.38);color:#fff}.search input::placeholder{color:#a69e91}
 .categories{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;padding:18px 0 6px}.category-card{min-height:215px;border:1px solid rgba(214,170,82,.52);background:#090909;border-radius:22px;box-shadow:0 14px 30px rgba(0,0,0,.28)}
@@ -131,7 +131,7 @@ button,input{font:inherit} button{cursor:pointer}
 .category-hero-copy h3{color:#f0d28a}.category-hero-copy .eyebrow{color:#d6aa52}.category-hero-copy p{color:#f1ece4}.back-btn{min-width:185px;min-height:56px;padding:14px 24px;background:linear-gradient(135deg,#d6aa52,#f0d28a);color:#0b0b0b;border-color:#f0d28a;box-shadow:0 12px 26px rgba(214,170,82,.22),inset 0 1px 0 rgba(255,255,255,.48)}
 .card{background:linear-gradient(145deg,#111,#171717);border-color:rgba(214,170,82,.18)}.name{color:#fff}.desc{color:#b8b0a4}.price{color:#f0d28a}.add{background:#d6aa52;color:#0b0b0b}.cart{background:#090909;border:1px solid rgba(214,170,82,.46);box-shadow:0 16px 36px rgba(0,0,0,.34)}.cart button{background:#d6aa52;color:#0b0b0b}.footer{color:#b8ae9d;border-color:rgba(214,170,82,.2)}
 @media(max-width:850px){.header{min-height:150px;padding:20px;gap:18px}.brand-logo-wrap{flex-basis:240px}.brand-logo{width:240px}.header h1{font-size:34px}.categories{grid-template-columns:repeat(3,minmax(0,1fr))}.category-card{min-height:205px}.category-hero{grid-template-columns:1fr}.category-hero-image{min-height:290px}}
-@media(max-width:560px){.header{position:sticky;top:6px;min-height:170px;padding:16px 14px;border-radius:20px;display:flex;flex-direction:column;text-align:center}.brand-logo-wrap{order:1;flex:0 0 auto;justify-content:center;width:100%}.brand-logo{width:220px}.brand-copy{order:2}.header h1{font-size:28px;margin-top:8px}.header p{font-size:13px}.tools{order:3;width:100%;justify-content:center;margin-top:2px}.tools .search{min-width:0;width:100%}.lang{margin-inline:auto}.categories{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;padding-top:14px}.category-card{min-height:190px;border-radius:18px}.category-hero{min-height:auto}.category-hero-image{min-height:260px}.category-hero-copy{padding:22px}.back-btn{width:100%;min-width:0;min-height:56px;font-size:17px;margin-bottom:10px}}
+@media(max-width:560px){.header{direction:rtl;position:sticky;top:6px;min-height:170px;padding:16px 14px;border-radius:20px;display:flex;flex-direction:column;text-align:center}.brand-logo-wrap{order:1;flex:0 0 auto;justify-content:center;width:100%}.brand-logo{width:220px}.brand-copy{order:2}.header h1{font-size:28px;margin-top:8px}.header p{font-size:13px}.tools{order:3;width:100%;justify-content:center;margin-top:2px}.tools .search{min-width:0;width:100%}.lang{margin-inline:auto}.categories{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;padding-top:14px}.category-card{min-height:190px;border-radius:18px}.category-hero{min-height:auto}.category-hero-image{min-height:260px}.category-hero-copy{padding:22px}.back-btn{width:100%;min-width:0;min-height:56px;font-size:17px;margin-bottom:10px}}
 
 /* HARD VIEW STATE: home and category view are mutually exclusive */
 body.page-open #categoryHome{display:none !important}
@@ -465,9 +465,9 @@ const CATEGORY_EN={
 };
 const CATEGORY_POS={
   'الشاورما':'0% 0%','المشاوي':'25% 0%','المطبخ الشرقي':'50% 0%','البيتزا':'75% 0%','السناكات':'100% 0%',
-  'حلا بارد':'0% 100%','العصائر والمشروبات':'25% 100%','الاراكيل':'50% 100%','المكسرات':'75% 100%','الكريب و الوافل':'100% 100%',
-  'بان كيك':'0% 100%','الايس كريم':'0% 100%','المشروبات الغازية':'25% 100%','المشروبات الساخنة':'0% 100%',
-  'ايس كوفي':'25% 100%','سموذي':'25% 100%','ميلك شيك':'25% 100%','الاراكيل الطبيعية':'50% 100%','الموهيتو':'25% 100%','فواكة':'25% 100%'
+  'حلا بارد':'0% 33.333%','العصائر والمشروبات':'25% 33.333%','الاراكيل':'50% 33.333%','المكسرات':'75% 33.333%','الكريب و الوافل':'100% 33.333%',
+  'بان كيك':'0% 66.666%','الايس كريم':'25% 66.666%','الموهيتو':'50% 66.666%','فواكة':'75% 66.666%','المشروبات الساخنة':'100% 66.666%',
+  'ايس كوفي':'0% 100%','سموذي':'25% 100%','ميلك شيك':'50% 100%','المشروبات الغازية':'75% 100%','الاراكيل الطبيعية':'100% 100%'
 };
 const CATEGORY_SPRITE='/lamset-alroh-menu/assets/category-sprite-micro.webp?v=4';
 function categoryLabel(c){return lang==='ar'?c:(CATEGORY_EN[c]||c)}
@@ -499,7 +499,7 @@ function renderCategoryHome(){
   const home=$('categoryHome');
   if(!home) return;
   home.innerHTML=cats.filter(c=>c!=='الكل').map(c=>`<button class="category-card" data-open-cat="${escapeHtml(c)}" type="button" aria-label="${escapeHtml(categoryLabel(c))}">
-    <div class="category-visual" style="background-image:url("${CATEGORY_SPRITE}");background-size:500% 200%;background-position:${CATEGORY_POS[c]||'center center'}"></div>
+    <div class="category-visual" style="background-image:url("${CATEGORY_SPRITE}");background-size:500% 400%;background-position:${CATEGORY_POS[c]||'center center'}"></div>
     <div class="category-name">${escapeHtml(categoryLabel(c))}<span class="category-en">${escapeHtml(lang==='ar'?(CATEGORY_EN[c]||''):(c||''))}</span></div>
   </button>`).join('');
   home.querySelectorAll('[data-open-cat]').forEach(b=>b.addEventListener('click',()=>openCategory(b.dataset.openCat)));
@@ -513,7 +513,7 @@ function renderCategoryHero(){
   }
   hero.hidden=false;
   $('categoryHeroImage').style.backgroundImage=`url("${CATEGORY_SPRITE}")`;
-  $('categoryHeroImage').style.backgroundSize='500% 200%';
+  $('categoryHeroImage').style.backgroundSize='500% 400%';
   $('categoryHeroImage').style.backgroundPosition=CATEGORY_POS[active]||'center center';
   $('heroTitle').textContent=categoryLabel(active);
   $('heroDescription').textContent=lang==='ar'?\`اختيارات ${active} من منيو مطعم وكافيه لمسة الروح.\`:\`Selected ${categoryLabel(active)} from Lamset Alroh Restaurant & Cafe.\`;
