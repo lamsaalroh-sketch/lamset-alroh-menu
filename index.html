@@ -334,7 +334,22 @@ main#home{display:block}.hero{padding:22px 0 12px!important}.hero .eyebrow{color
   .sectionHero .sectionInfo{padding:24px 20px}.sectionHero .sectionInfo h3{font-size:34px!important}
   .sectionSearchRow{gap:8px;margin:12px 0 16px}.sectionLang{min-width:96px!important}
   .page.show .items{grid-template-columns:1fr}
-}</style></head>
+}</style>
+<style>
+/* LAMSA MOBILE INPUT FIX */
+@media (max-width: 768px) {
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  input, textarea, select, button, [contenteditable="true"] {
+    font-size: 16px !important;
+  }
+  input, textarea, select {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+</style>
+
+</head>
 <body>
 <div class="wrap">
   <header class="top heroTop">
