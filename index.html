@@ -349,7 +349,44 @@ main#home{display:block}.hero{padding:22px 0 12px!important}.hero .eyebrow{color
 }
 </style>
 
-</head>
+
+<style>
+/* LAMSA CART VISUAL POLISH */
+:root {
+  --lamsa-gold: #d6ad55;
+  --lamsa-gold-light: #f2d58b;
+  --lamsa-ink: #111111;
+  --lamsa-paper: #ffffff;
+}
+[class*="cart" i], [id*="cart" i],
+[class*="basket" i], [id*="basket" i] {
+  font-family: "Cairo", "Tajawal", system-ui, sans-serif;
+}
+[class*="cart" i] button, [id*="cart" i] button,
+[class*="basket" i] button, [id*="basket" i] button {
+  font-family: "Cairo", "Tajawal", system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0;
+  transition: background-color .18s ease, border-color .18s ease, transform .18s ease;
+}
+[class*="cart" i] button:focus-visible, [id*="cart" i] button:focus-visible,
+[class*="basket" i] button:focus-visible, [id*="basket" i] button:focus-visible {
+  outline: 2px solid var(--lamsa-gold);
+  outline-offset: 2px;
+}
+[class*="cart" i] [class*="total" i], [id*="cart" i] [class*="total" i],
+[class*="basket" i] [class*="total" i], [id*="basket" i] [class*="total" i] {
+  color: var(--lamsa-gold-light);
+  font-weight: 800;
+}
+@media (max-width: 768px) {
+  [class*="cart" i], [id*="cart" i],
+  [class*="basket" i], [id*="basket" i] {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+</style>
+\n</head>
 <body>
 <div class="wrap">
   <header class="top heroTop">
