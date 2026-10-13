@@ -1,0 +1,83 @@
+name: Polish cart colors and typography
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/cart-style.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  polish-cart:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add cart theme polish
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path("index.html")
+          html = p.read_text(encoding="utf-8")
+          marker = "/* LAMSA CART VISUAL POLISH */"
+          if marker in html:
+              print("Cart polish already present.")
+              raise SystemExit(0)
+          css = """
+          <style>
+          /* LAMSA CART VISUAL POLISH */
+          :root {
+            --lamsa-gold: #d6ad55;
+            --lamsa-gold-light: #f2d58b;
+            --lamsa-ink: #111111;
+            --lamsa-paper: #ffffff;
+          }
+          [class*="cart" i], [id*="cart" i],
+          [class*="basket" i], [id*="basket" i] {
+            font-family: "Cairo", "Tajawal", system-ui, sans-serif;
+          }
+          [class*="cart" i] button, [id*="cart" i] button,
+          [class*="basket" i] button, [id*="basket" i] button {
+            font-family: "Cairo", "Tajawal", system-ui, sans-serif;
+            font-weight: 600;
+            letter-spacing: 0;
+            transition: background-color .18s ease, border-color .18s ease, transform .18s ease;
+          }
+          [class*="cart" i] button:focus-visible, [id*="cart" i] button:focus-visible,
+          [class*="basket" i] button:focus-visible, [id*="basket" i] button:focus-visible {
+            outline: 2px solid var(--lamsa-gold);
+            outline-offset: 2px;
+          }
+          [class*="cart" i] [class*="total" i], [id*="cart" i] [class*="total" i],
+          [class*="basket" i] [class*="total" i], [id*="basket" i] [class*="total" i] {
+            color: var(--lamsa-gold-light);
+            font-weight: 800;
+          }
+          @media (max-width: 768px) {
+            [class*="cart" i], [id*="cart" i],
+            [class*="basket" i], [id*="basket" i] {
+              -webkit-tap-highlight-color: transparent;
+            }
+          }
+          </style>
+          """
+          if re.search(r"</head\s*>", html, flags=re.I):
+              html = re.sub(r"</head\s*>", lambda m: css + "\\n" + m.group(0), html, count=1, flags=re.I)
+          else:
+              html = css + html
+          p.write_text(html, encoding="utf-8")
+          print("Inserted cart typography and focus styling.")
+          PY
+      - name: Commit styling
+        run: |
+          if git diff --quiet; then
+            echo "No changes needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Polish cart colors and typography"
+          git push
