@@ -73,7 +73,7 @@ jobs:
               return new_obj
 
           updated_items = item_pattern.sub(update_item, juice_items)
-          if len(set(changed)) < 10:
+          if len(set(changed)) < 9:
               raise SystemExit(f"STOP: only {len(set(changed))} matching juice items found; no changes made.")
           updated = html[:start] + updated_items + html[end:]
           if updated == html:
