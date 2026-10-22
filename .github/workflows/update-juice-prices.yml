@@ -1,0 +1,96 @@
+name: Update juice section prices only
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/update-juice-prices.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  update-juice-prices:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update prices in the existing juice section only
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path("index.html")
+          html = p.read_text(encoding="utf-8")
+
+          category = re.search(r'"ar"\s*:\s*"العصائر والمشروبات"', html)
+          if not category:
+              raise SystemExit("STOP: juice category not found; no changes made.")
+
+          items_key = re.search(r'"items"\s*:\s*\[', html[category.start():])
+          if not items_key:
+              raise SystemExit("STOP: juice items list not found; no changes made.")
+          start = category.start() + items_key.end()
+          end_match = re.search(r'\]\s*\}', html[start:])
+          if not end_match:
+              raise SystemExit("STOP: juice list boundary not found; no changes made.")
+          end = start + end_match.start()
+          juice_items = html[start:end]
+
+          prices = {
+              "عصير موز": "2,500",
+              "عصير موز نستلة": "2,500",
+              "عصير برتقال": "2,500",
+              "عصير برتقال ليمون": "2,500",
+              "عصير ليمون": "2,500",
+              "عصير ليمون نعناع": "2,500",
+              "عصير بطيخ": "2,500",
+              "عصير كوكتيل": "2,500",
+              "عصير تين": "3,000",
+              "عصير منكا": "3,000",
+              "عصير خوخ": "2,500",
+              "عصير انناس": "3,000",
+              "عصير مشمش": "3,000",
+              "عصير رمان": "3,000",
+              "عصير فرولة": "3,000",
+              "كوكتيل لمسة الروح": "5,000",
+              "عصير لمسة الروح": "3,500",
+          }
+
+          changed = []
+          item_pattern = re.compile(r'\{[^{}]*"ar"\s*:\s*"([^"]+)"[^{}]*\}')
+          def update_item(m):
+              obj = m.group(0)
+              name = m.group(1)
+              if name not in prices:
+                  return obj
+              new_obj, count = re.subn(
+                  r'("price"\s*:\s*")[^"]*(")',
+                  lambda pm: pm.group(1) + prices[name] + pm.group(2),
+                  obj, count=1
+              )
+              if count and new_obj != obj:
+                  changed.append(name)
+              return new_obj
+
+          updated_items = item_pattern.sub(update_item, juice_items)
+          if len(set(changed)) < 10:
+              raise SystemExit(f"STOP: only {len(set(changed))} matching juice items found; no changes made.")
+          updated = html[:start] + updated_items + html[end:]
+          if updated == html:
+              print("Juice prices already match; no changes needed.")
+              raise SystemExit(0)
+          p.write_text(updated, encoding="utf-8")
+          print("Updated prices only for existing juice items: " + ", ".join(sorted(set(changed))))
+          print("No item names, other categories, or layout were changed.")
+          PY
+      - name: Commit updated juice prices
+        run: |
+          if git diff --quiet; then
+            echo "No juice price changes needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Update juice section prices only"
+          git push
