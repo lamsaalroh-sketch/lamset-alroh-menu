@@ -62,29 +62,71 @@ function renderHome(filter = "") {
   });
 }
 
+
+function cartQuantity(category, item) {
+  const key = category.ar + "|" + item.ar;
+  return cart.find(entry => entry.key === key)?.qty || 0;
+}
+
+function renderItemQuantityControl(category, item, index) {
+  const count = cartQuantity(category, item);
+  return `<div class="item-quantity-controls" data-item-index="${index}" data-qty="${count}">
+    <button class="item-qty-button qty-minus" type="button" data-item-delta="-1" aria-label="تقليل كمية ${escapeHtml(item.ar)}">−</button>
+    <output class="item-qty-number" aria-live="polite" aria-label="العدد الحالي">${count.toLocaleString("en-US")}</output>
+    <button class="item-qty-button qty-plus" type="button" data-item-delta="1" aria-label="زيادة كمية ${escapeHtml(item.ar)}">+</button>
+  </div>`;
+}
+
+function syncVisibleItemControls() {
+  if (!active || $("page").hidden) return;
+  $("items").querySelectorAll(".item-quantity-controls").forEach(control => {
+    const item = active.items[Number(control.dataset.itemIndex)];
+    if (!item) return;
+    const count = cartQuantity(active, item);
+    if (Number(control.dataset.qty) !== count) {
+      control.dataset.qty = String(count);
+      control.querySelector(".item-qty-number").textContent = count.toLocaleString("en-US");
+      const article = control.closest(".item");
+      if (article) article.classList.toggle("item-has-quantity", count > 0);
+    }
+  });
+}
+
+function changeItemQuantity(category, index, delta) {
+  const item = category?.items[index];
+  if (!item || !Number.isInteger(delta) || ![-1, 1].includes(delta)) return;
+  const key = category.ar + "|" + item.ar;
+  const existing = cart.find(entry => entry.key === key);
+  if (!existing && delta < 0) return;
+  if (!existing) {
+    cart.push({key, section:category.ar, name:item.ar, price:numericPrice(item.price), qty:1});
+    showToast("انضاف للسلة ✓");
+  } else {
+    existing.qty += delta;
+    if (existing.qty <= 0) cart.splice(cart.indexOf(existing), 1);
+  }
+  updateCartUI();
+}
+
 function renderSectionItems(filter = "") {
   if (!active) return;
   const query = normalizeSearch(filter);
   const visible = active.items.map((item, index) => ({item,index})).filter(({item}) => !query || normalizeSearch(item.ar).includes(query));
   $("items").innerHTML = visible.map(({item,index}, pos) => {
     const src = itemPhoto(active, item);
-    return `<article class="item" style="animation-delay:${Math.min(pos, 15) * 20}ms">
+    return `<article class="item${cartQuantity(active, item) ? " item-has-quantity" : ""}" data-item-index="${index}" style="animation-delay:${Math.min(pos, 15) * 20}ms">
       ${src ? `<img class="item-photo" src="${escapeHtml(src)}" alt="${escapeHtml(item.ar)}" loading="lazy" decoding="async">` : ""}
       <div class="item-main">
         <div class="item-copy"><div class="name">${escapeHtml(item.ar)}</div>
           ${item.desc ? `<div class="desc">${escapeHtml(item.desc)}</div>` : ""}
           <div class="price">${money(numericPrice(item.price))}</div>
         </div>
-        <button class="add-to-cart" data-add="${index}" type="button" aria-label="إضافة ${escapeHtml(item.ar)} للسلة">+</button>
+        ${renderItemQuantityControl(active, item, index)}
       </div>
     </article>`;
   }).join("");
   $("items").querySelectorAll("img.item-photo").forEach(img => img.addEventListener("error", () => img.remove(), {once:true}));
-  $("items").querySelectorAll("[data-add]").forEach(button => button.addEventListener("click", () => {
-    addToCart(active, Number(button.dataset.add));
-    button.classList.add("just-added");
-    setTimeout(() => button.classList.remove("just-added"), 190);
-  }));
+  syncVisibleItemControls();
   $("empty").hidden = visible.length > 0;
   $("empty").textContent = query ? "ماكو صنف مطابق للبحث." : "لا توجد أصناف بهذا القسم حالياً.";
 }
@@ -131,6 +173,7 @@ function updateCartUI() {
   $("cartBadge").textContent = count.toLocaleString("en-US");
   $("cartTotal").textContent = money(sum);
   $("checkoutSubmit").disabled = cart.length === 0;
+  syncVisibleItemControls();
   $("cartRows").innerHTML = cart.length ? cart.map((item,index) => `
     <div class="cart-row">
       <div><div class="cart-row-name">${escapeHtml(item.name)}</div>
@@ -216,6 +259,13 @@ function sendOrder(event) {
 function init() {
   $("search").addEventListener("input", event => renderHome(event.target.value));
   $("sectionSearchInput").addEventListener("input", event => renderSectionItems(event.target.value));
+  $("items").addEventListener("click", event => {
+    const button = event.target.closest("button[data-item-delta]");
+    if (!button || !active) return;
+    const container = button.closest(".item-quantity-controls");
+    if (!container) return;
+    changeItemQuantity(active, Number(container.dataset.itemIndex), Number(button.dataset.itemDelta));
+  });
   $("backBtn").addEventListener("click", backHome);
   $("viewCart").addEventListener("click", openCart);
   $("cartClose").addEventListener("click", closeCart);
