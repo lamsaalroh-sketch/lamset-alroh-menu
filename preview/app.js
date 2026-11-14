@@ -25,7 +25,7 @@ function money(amount) {
 
 function itemPhoto(category,item) {
   // Only explicit item-level image paths are used; no misleading category photo as a substitute.
-  return typeof item.img === "string" && item.img.trim() ? item.img.trim() : "";
+  return (typeof item.img === "string" && item.img.trim()) || (window.LAMSET_ITEM_IMAGES && window.LAMSET_ITEM_IMAGES[category.ar + "|" + item.ar]) || "";
 }
 
 function renderHome(filter = "") {
@@ -79,6 +79,7 @@ function renderSectionItems(filter = "") {
       </div>
     </article>`;
   }).join("");
+  $("items").querySelectorAll("img.item-photo").forEach(img => img.addEventListener("error", () => img.remove(), {once:true}));
   $("items").querySelectorAll("[data-add]").forEach(button => button.addEventListener("click", () => {
     addToCart(active, Number(button.dataset.add));
     button.classList.add("just-added");
