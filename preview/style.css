@@ -1,5 +1,5 @@
 /* Lamset Alroh menu preview, clean replacement stylesheet. Brand: burgundy / cream. */
-:root{--wine:#741f2f;--wine-dark:#531522;--wine-light:#96394a;--wine-veil:#f7ecec;--cream:#faf7f3;--paper:#fffdfb;--ink:#332526;--muted:#856f6e;--line:#eadfd9;--shadow:0 8px 28px rgba(77,29,34,.07);--radius:22px;font-family:"Tajawal",Tahoma,Arial,sans-serif;color-scheme:light}
+:root{--wine:#461b39;--wine-dark:#321326;--wine-light:#713c62;--wine-veil:#f4edf1;--cream:#faf7f3;--paper:#fffdfb;--ink:#30262c;--muted:#7c6c78;--line:#eadfe6;--shadow:0 8px 28px rgba(77,29,34,.07);--radius:22px;font-family:"Tajawal",Tahoma,Arial,sans-serif;color-scheme:light}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -8,7 +8,7 @@ body.modal-open{overflow:hidden}
 button,input,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #c98190;outline-offset:3px}
 button:disabled{cursor:not-allowed;opacity:.58}img{max-width:100%}
 .site-shell{width:min(1180px,calc(100% - 36px));margin:auto;padding-bottom:124px}
-.masthead{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(125deg,var(--wine-dark),var(--wine) 61%,#9c3a48);color:#fff;border-radius:0 0 32px 32px;box-shadow:0 16px 42px rgba(92,26,39,.16)}
+.masthead{position:relative;isolation:isolate;overflow:hidden;background:var(--wine);color:#fff;border-radius:0 0 32px 32px;box-shadow:0 16px 42px rgba(70,27,57,.16)}
 .masthead:before{content:"";position:absolute;z-index:-1;width:410px;height:410px;border-radius:50%;background:rgba(255,255,255,.048);top:-225px;left:-50px;box-shadow:70px 60px 0 24px rgba(255,255,255,.024)}
 .masthead:after{content:"";position:absolute;width:200px;height:2px;bottom:22px;right:50%;transform:translateX(50%);background:linear-gradient(90deg,transparent,#f1cfb8,transparent);opacity:.68}
 .masthead-inner{min-height:210px;display:flex;align-items:center;justify-content:center;gap:30px;padding:22px 38px 30px}
@@ -17,7 +17,7 @@ button:disabled{cursor:not-allowed;opacity:.58}img{max-width:100%}
 .brand-copy h1{font-size:clamp(26px,3.4vw,39px);font-weight:900;line-height:1.25;letter-spacing:0;margin:10px 0}.brand-copy p{font-size:16px;color:#ffede7;margin:0}
 .intro{text-align:center;padding:35px 0 20px}.section-kicker{font:800 11px/1.8 "Tajawal",sans-serif;letter-spacing:1.5px;color:var(--wine-light)}.intro h2{font-size:clamp(25px,3.1vw,34px);margin:4px 0 0;font-weight:900;color:var(--wine-dark)}.intro p{margin:5px 0 0;color:var(--muted);font-size:15px}
 .search-box{display:flex;align-items:center;position:relative;min-height:58px;margin:0 auto 22px;max-width:1020px;background:var(--paper);border:1px solid var(--line);border-radius:17px;box-shadow:0 3px 14px rgba(79,42,44,.035);overflow:hidden;transition:border-color .2s,box-shadow .2s}
-.search-box:focus-within{border-color:#b76c78;box-shadow:0 0 0 4px rgba(153,63,79,.09)}.search-glyph{font:400 29px/1 sans-serif;color:var(--wine);margin:0 18px 0 6px}
+.search-box:focus-within{border-color:#b76c78;box-shadow:0 0 0 4px rgba(70,27,57,.09)}.search-glyph{font:400 29px/1 sans-serif;color:var(--wine);margin:0 18px 0 6px}
 .search-box input{width:100%;border:0;outline:0;box-shadow:none!important;background:transparent;color:var(--ink);font-size:16px;min-height:56px;padding:10px 2px 10px 17px;direction:rtl}
 .search-box input::placeholder{color:#95817f}
 .category-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
@@ -28,7 +28,7 @@ button:disabled{cursor:not-allowed;opacity:.58}img{max-width:100%}
 .search-results{padding:8px 0 15px}.search-results h3{font-size:19px;color:var(--wine);margin:0 0 13px}.result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .result-card{background:var(--paper);border:1px solid var(--line);border-radius:15px;padding:13px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:right;color:var(--ink)}
 .result-card strong{display:block;font-size:16px}.result-card small{display:block;color:var(--muted)}.result-price{color:var(--wine);font-weight:900;white-space:nowrap}
-.page-actions{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:23px 0 14px}.back-button{min-width:180px;min-height:52px;padding:12px 20px;border:0;border-radius:15px;background:var(--wine);color:white;font-size:17px;font-weight:900;box-shadow:0 7px 16px rgba(116,31,47,.17)}
+.page-actions{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:23px 0 14px}.back-button{min-width:180px;min-height:52px;padding:12px 20px;border:0;border-radius:15px;background:var(--wine);color:white;font-size:17px;font-weight:900;box-shadow:0 7px 16px rgba(70,27,57,.17)}
 .back-button:hover,.dock-button:hover,.confirm-button:hover{background:var(--wine-dark)}.page-hint{font-size:13px;color:var(--muted)}
 .category-hero{display:grid;grid-template-columns:1.2fr 1fr;min-height:290px;background:var(--paper);border:1px solid var(--line);border-radius:25px;overflow:hidden;box-shadow:var(--shadow)}
 .category-hero-photo{height:290px;overflow:hidden;background:#eadbd5}.category-hero-photo img{height:100%;width:100%;object-fit:cover;display:block}
@@ -76,4 +76,19 @@ button:disabled{cursor:not-allowed;opacity:.58}img{max-width:100%}
 .modal-backdrop{padding:0}.cart-sheet{max-height:94dvh;padding:12px 15px max(23px,env(safe-area-inset-bottom))}.cart-heading h2{font-size:23px}
 }
 @media(max-width:385px){.cat{flex-wrap:wrap;justify-content:center;text-align:center}.cat-image{width:100%;height:78px;flex:1 1 100%}.cat-chevron{display:none}.cat-text{flex:1 1 100%}.cat-text strong{font-size:14px}.brand-copy h1{font-size:21px}}
+
+/* Quantity controls: single '+' before adding, minus/count/plus after adding. */
+.item-quantity-controls{display:inline-flex;align-items:center;justify-content:center;gap:6px;flex:0 0 auto;min-height:49px;padding:4px;border:1px solid #dccbd6;border-radius:15px;background:var(--wine-veil);direction:ltr;transition:background .2s,border-color .2s}
+.item-qty-button{display:grid;place-items:center;flex:0 0 37px;width:37px;height:38px;border:0;border-radius:11px;font:900 26px/1 "Tajawal",Tahoma,sans-serif;padding:0 0 1px;transition:transform .12s,background .18s}
+.item-qty-button:active{transform:scale(.90)}
+.item-qty-button.qty-plus{background:var(--wine);color:white}
+.item-qty-button.qty-plus:hover{background:var(--wine-dark)}
+.item-qty-button.qty-minus{background:#fff;color:var(--wine);border:1px solid #dfcdd7}
+.item-qty-number{display:inline-block;min-width:19px;text-align:center;color:var(--wine-dark);font:900 18px/1 "Tajawal",sans-serif;white-space:nowrap}
+.item-quantity-controls[data-qty="0"]{padding:0;border:0;background:transparent;min-height:45px}
+.item-quantity-controls[data-qty="0"] .qty-minus,.item-quantity-controls[data-qty="0"] .item-qty-number{display:none}
+.item-quantity-controls[data-qty="0"] .qty-plus{width:45px;height:45px;flex-basis:45px;border-radius:13px;font-size:30px}
+.item.item-has-quantity{border-color:#d5b5c7;background:#fffdfa}
+@media(max-width:650px){.item-quantity-controls{gap:4px;padding:3px;min-height:44px;border-radius:13px}.item-qty-button{width:32px;height:35px;flex-basis:32px;font-size:24px}.item-qty-number{min-width:16px;font-size:17px}.item-quantity-controls[data-qty="0"] .qty-plus{width:43px;height:43px;flex-basis:43px}}
+
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
