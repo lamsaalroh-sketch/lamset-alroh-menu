@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#741f2f">
+  <meta name="description" content="منيو مطعم وكافيه لمسة الروح">
+  <title>تجربة المنيو الجديد | لمسة الروح</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./menu-data.js" defer></script>
+  <script src="./menu-image-map.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="masthead" id="masthead">
+      <div class="masthead-inner">
+        <img class="brand-logo" src="https://raw.githubusercontent.com/lamsaalroh-sketch/lamset-alroh-menu/preview-menu-20261114/preview/assets/restaurant-logo.png" alt="شعار مطعم وكافيه لمسة الروح">
+        <div class="brand-copy"><span class="brand-kicker">LAMSET ALROH · RESTAURANT & CAFE</span>
+          <h1>مطعم وكافيه لمسة الروح</h1>
+          <p>نكهة تحبها، وجلسة تستاهلها</p>
+        </div>
+      </div>
+    </header>
+    <main id="home" class="home-view">
+      <div class="intro"><span class="section-kicker">MENU • منيو لمسة الروح</span><h2>اختار اللي يعجبك</h2>
+        <p>أطباقنا ومشروباتنا وحلوياتنا كلها بمكان واحد</p></div>
+      <label class="search-box"><span class="search-glyph" aria-hidden="true">⌕</span><input id="search" type="search" placeholder="ابحث عن قسم أو صنف..." autocomplete="off" aria-label="البحث في المنيو"></label>
+      <div id="categories" class="category-grid"></div>
+      <section id="searchResults" class="search-results" hidden aria-live="polite">
+        <h3>الأصناف المطابقة</h3><div id="searchResultList" class="result-grid"></div><p id="searchEmpty" class="empty-message" hidden>ماكو صنف مطابق للبحث.</p>
+      </section>
+    </main>
+    <main id="page" class="page-view" hidden>
+      <div class="page-actions"><button id="backBtn" type="button" class="back-button">→ رجوع للأقسام</button><span class="page-hint">كل نكهة إلها حكاية</span></div>
+      <section class="category-hero">
+        <div class="category-hero-photo"><img id="sectionImageImg" alt="" loading="eager"></div>
+        <div class="category-hero-copy"><span class="section-kicker">LAMSET ALROH MENU</span><h2 id="sectionTitle"></h2><p id="sectionText"></p></div>
+      </section>
+      <label class="search-box section-search"><span class="search-glyph" aria-hidden="true">⌕</span><input id="sectionSearchInput" type="search" placeholder="ابحث داخل القسم..." autocomplete="off" aria-label="البحث داخل القسم"></label>
+      <div id="items" class="item-grid"></div><p class="empty-message" id="empty" hidden></p>
+    </main>
+    <footer class="footer">أكثر من مجرد وجبة، إنها لمسة روح ♡</footer>
+  </div>
+  <aside class="cart-dock" aria-label="ملخص السلة">
+    <div class="dock-icon" aria-hidden="true">🛍️</div>
+    <div class="dock-info"><strong>طلبك</strong><span id="cartSummary">0 أصناف • 0 د.ع</span></div>
+    <button id="viewCart" class="dock-button" type="button">عرض السلة <span id="cartBadge" class="cart-badge">0</span></button>
+  </aside>
+  <div class="modal-backdrop" id="cartModal" hidden aria-hidden="true">
+    <section class="cart-sheet" role="dialog" aria-modal="true" aria-labelledby="cartHeading">
+      <div class="sheet-handle" aria-hidden="true"></div>
+      <div class="cart-heading"><div><span class="section-kicker">LAMSET ALROH</span><h2 id="cartHeading">سلة الطلبات</h2></div><button id="cartClose" class="close-button" type="button" aria-label="إغلاق السلة">×</button></div>
+      <div id="cartRows" class="cart-rows"></div>
+      <div class="cart-total"><span>مجموع الأصناف</span><strong id="cartTotal">0 د.ع</strong></div>
+      <form id="checkoutForm" class="checkout-form">
+        <h3>معلومات الطلب</h3><p>أجور التوصيل تتحدد حسب المنطقة ويأكدها المطعم.</p>
+        <label for="customerName">الاسم الكامل <input id="customerName" autocomplete="name" required maxlength="100" placeholder="اسمك الكامل"></label>
+        <label for="customerPhone">رقم الهاتف <input id="customerPhone" type="tel" autocomplete="tel" inputmode="tel" required maxlength="20" placeholder="07xxxxxxxxx"></label>
+        <label for="customerAddress">العنوان بالتفصيل <input id="customerAddress" autocomplete="street-address" required maxlength="300" placeholder="المنطقة، الشارع، أقرب نقطة دالة"></label>
+        <label for="customerNotes">ملاحظات (اختياري) <textarea id="customerNotes" maxlength="500" rows="2" placeholder="مثلاً: بدون بصل..."></textarea></label>
+        <button id="checkoutSubmit" type="submit" class="confirm-button">تأكيد الطلب عبر واتساب</button>
+      </form>
+    </section>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
