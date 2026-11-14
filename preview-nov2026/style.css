@@ -99,3 +99,7 @@ button:disabled{cursor:not-allowed;opacity:.58}img{max-width:100%}
 @media(max-width:650px){.item-quantity-controls{gap:4px;padding:3px;min-height:44px;border-radius:13px}.item-qty-button{width:32px;height:35px;flex-basis:32px;font-size:24px}.item-qty-number{min-width:16px;font-size:17px}.item-quantity-controls[data-qty="0"] .qty-plus{width:43px;height:43px;flex-basis:43px}}
 
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* Published preview status: the 240 illustrations are temporary, individually labelled artwork. */
+.preview-notice{display:inline-block;margin:11px auto 0!important;padding:9px 15px;border-radius:13px;border:1px solid #dfc6d4;background:#fff9f8;color:#59253e!important;font-size:13px!important;font-weight:800;max-width:96%;line-height:1.7}
+@media(max-width:650px){.preview-notice{font-size:12px!important;padding:8px 12px}}
