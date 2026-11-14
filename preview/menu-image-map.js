@@ -1,4 +1,4 @@
-/* Exact item-to-photo mapping. Binary images must be uploaded to preview/assets/items before display. */
+/* Exact item-to-photo names. Photos must be deployed into preview/assets/items to display. */
 window.LAMSET_ITEM_IMAGES = {
   "المطبخ الشرقي|قوزي الشام": "./assets/items/eastern-01.webp",
   "المطبخ الشرقي|قوزي لحم على التمن": "./assets/items/eastern-02.webp",
@@ -46,5 +46,7 @@ window.LAMSET_ITEM_IMAGES = {
   "الشاورما|سندويج كص دجاج مع فنكر مع ببسي فريش": "./assets/items/shawarma-07.webp",
   "الشاورما|صاج دجاج": "./assets/items/shawarma-08.webp",
   "الشاورما|سندويج شاورما لحم": "./assets/items/shawarma-09.webp",
-  "الشاورما|سندويج شاورما دجاج": "./assets/items/shawarma-10.webp"
+  "الشاورما|سندويج شاورما دجاج": "./assets/items/shawarma-10.webp",
+  "السناكات|بركر بالجبن": "./assets/items/snacks-01.webp",
+  "السناكات|كنتاكي 3 قطع": "./assets/items/snacks-02.webp"
 };
