@@ -127,9 +127,14 @@ function renderSectionItems(filter = "") {
   const visible = active.items.map((item, index) => ({item,index})).filter(({item}) => !query || normalizeSearch(item.ar).includes(query));
   $("items").innerHTML = visible.map(({item,index}, pos) => {
     const src = itemPhoto(active, item);
+    const spriteIdx = window.LAMSET_PHOTO_SPRITE_INDEX?.[active.ar + "|" + item.ar];
+    const photoTile = Number.isInteger(spriteIdx) && spriteIdx >= 0
+      ? `<span class="item-photo-sprite" role="img" aria-label="صورة توضيحية لـ${escapeHtml(item.ar)}" style="background-position:${((spriteIdx % 8) / 7 * 100).toFixed(5)}% ${(Math.floor(spriteIdx / 8) / 7 * 100).toFixed(5)}%"></span>`
+      : "";
     return `<article class="item${cartQuantity(active, item) ? " item-has-quantity" : ""}" data-item-index="${index}" style="animation-delay:${Math.min(pos, 15) * 20}ms">
       <div class="item-media"><span class="item-placeholder" aria-hidden="true">${sectionIcon(active.ar)}</span>
         ${src ? `<img class="item-photo" src="${escapeHtml(src)}" alt="${escapeHtml(item.ar)}" loading="lazy" decoding="async">` : ""}
+        ${photoTile}
       </div>
       <div class="item-main">
         <div class="item-copy"><div class="name">${escapeHtml(item.ar)}</div>
