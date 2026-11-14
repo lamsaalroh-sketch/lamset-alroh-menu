@@ -103,3 +103,6 @@ button:disabled{cursor:not-allowed;opacity:.58}img{max-width:100%}
 /* Published preview status: the 240 illustrations are temporary, individually labelled artwork. */
 .preview-notice{display:inline-block;margin:11px auto 0!important;padding:9px 15px;border-radius:13px;border:1px solid #dfc6d4;background:#fff9f8;color:#59253e!important;font-size:13px!important;font-weight:800;max-width:96%;line-height:1.7}
 @media(max-width:650px){.preview-notice{font-size:12px!important;padding:8px 12px}}
+
+/* Real image crops uploaded as a single 3.5 KB 8×8 JPEG sprite. Branded SVG preview remains as fallback. */
+.item-photo-sprite{position:absolute;inset:0;z-index:3;display:block;width:100%;height:100%;border-radius:inherit;background-image:url("./assets/photo-sprite.jpg?v=20261114-60");background-repeat:no-repeat;background-size:800% 800%;background-color:#f8f0ec}
