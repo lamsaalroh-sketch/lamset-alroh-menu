@@ -1,4 +1,4 @@
-/* Exact item-to-photo names. Photos must be deployed into preview/assets/items to display. */
+/* Exact item-to-photo mapping. Upload actual assets into preview/assets/items to display. */
 window.LAMSET_ITEM_IMAGES = {
   "المطبخ الشرقي|قوزي الشام": "./assets/items/eastern-01.webp",
   "المطبخ الشرقي|قوزي لحم على التمن": "./assets/items/eastern-02.webp",
@@ -48,5 +48,16 @@ window.LAMSET_ITEM_IMAGES = {
   "الشاورما|سندويج شاورما لحم": "./assets/items/shawarma-09.webp",
   "الشاورما|سندويج شاورما دجاج": "./assets/items/shawarma-10.webp",
   "السناكات|بركر بالجبن": "./assets/items/snacks-01.webp",
-  "السناكات|كنتاكي 3 قطع": "./assets/items/snacks-02.webp"
+  "السناكات|كنتاكي 3 قطع": "./assets/items/snacks-02.webp",
+  "السناكات|كنتاكي 2 قطع": "./assets/items/snacks-03.webp",
+  "السناكات|كنتاكي 5 قطع": "./assets/items/snacks-05.webp",
+  "السناكات|سندويج كرسبي": "./assets/items/snacks-06.webp",
+  "السناكات|سندويج زنجر": "./assets/items/snacks-07.webp",
+  "السناكات|ريزو كلاسك": "./assets/items/snacks-08.webp",
+  "السناكات|ريزو بالشاورما": "./assets/items/snacks-09.webp",
+  "السناكات|ريزو بالجبن": "./assets/items/snacks-10.webp",
+  "السناكات|سندويج كرسبي مع ببسي": "./assets/items/snacks-11.webp",
+  "السناكات|طبق فنكر": "./assets/items/snacks-12.webp",
+  "السناكات|طبق فنكر بالجبن": "./assets/items/snacks-13.webp",
+  "السناكات|بركر كلاسك": "./assets/items/snacks-14.webp"
 };
