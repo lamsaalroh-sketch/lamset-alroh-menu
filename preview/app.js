@@ -169,7 +169,7 @@ function addToCart(category,index) {
 function updateCartUI() {
   const count = cart.reduce((total,item) => total + item.qty,0);
   const sum = cart.reduce((total,item) => total + item.qty*item.price,0);
-  $("cartSummary").textContent = count + " أصناف • " + money(sum);
+  $("cartSummary").textContent = "العدد: " + count.toLocaleString("en-US") + " • " + money(sum);
   $("cartBadge").textContent = count.toLocaleString("en-US");
   $("cartTotal").textContent = money(sum);
   $("checkoutSubmit").disabled = cart.length === 0;
