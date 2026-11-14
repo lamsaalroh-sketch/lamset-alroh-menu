@@ -1,4 +1,4 @@
-/* Photos are staged for upload; absent files gracefully fall back to text cards. */
+/* Exact item-to-photo mapping. Binary images must be uploaded to preview/assets/items before display. */
 window.LAMSET_ITEM_IMAGES = {
   "المطبخ الشرقي|قوزي الشام": "./assets/items/eastern-01.webp",
   "المطبخ الشرقي|قوزي لحم على التمن": "./assets/items/eastern-02.webp",
@@ -37,5 +37,14 @@ window.LAMSET_ITEM_IMAGES = {
   "المشاوي|نصف نفر معلاك": "./assets/items/grills-10.webp",
   "المشاوي|نفر ضلوع": "./assets/items/grills-11.webp",
   "المشاوي|نصف نفر ضلوع": "./assets/items/grills-12.webp",
-  "الشاورما|صاج لحم": "./assets/items/shawarma-01.webp"
+  "الشاورما|صاج لحم": "./assets/items/shawarma-01.webp",
+  "الشاورما|نفر كص": "./assets/items/shawarma-02.webp",
+  "الشاورما|نصف نفر كص": "./assets/items/shawarma-03.webp",
+  "الشاورما|نفر كص دجاج": "./assets/items/shawarma-04.webp",
+  "الشاورما|نصف نفر كص دجاج": "./assets/items/shawarma-05.webp",
+  "الشاورما|سندويج كص لحم + فنكر+ ببسي فريش": "./assets/items/shawarma-06.webp",
+  "الشاورما|سندويج كص دجاج مع فنكر مع ببسي فريش": "./assets/items/shawarma-07.webp",
+  "الشاورما|صاج دجاج": "./assets/items/shawarma-08.webp",
+  "الشاورما|سندويج شاورما لحم": "./assets/items/shawarma-09.webp",
+  "الشاورما|سندويج شاورما دجاج": "./assets/items/shawarma-10.webp"
 };
