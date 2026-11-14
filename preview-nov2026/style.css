@@ -77,6 +77,13 @@ button:disabled{cursor:not-allowed;opacity:.58}img{max-width:100%}
 }
 @media(max-width:385px){.cat{flex-wrap:wrap;justify-content:center;text-align:center}.cat-image{width:100%;height:78px;flex:1 1 100%}.cat-chevron{display:none}.cat-text{flex:1 1 100%}.cat-text strong{font-size:14px}.brand-copy h1{font-size:21px}}
 
+
+/* Honest, branded visual fallback until exact dish photography is uploaded. */
+.item-media{position:relative;display:grid;place-items:center;flex:0 0 93px;width:93px;height:82px;border-radius:13px;overflow:hidden;background:linear-gradient(135deg,#f4e8ee,#fff7f1);border:1px solid rgba(70,27,57,.08)}
+.item-media .item-placeholder{display:block;font-size:36px;line-height:1;filter:drop-shadow(0 3px 3px rgba(60,20,42,.13))}
+.item-media .item-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0;border-radius:inherit;flex:none}
+@media(max-width:650px){.item-media{height:77px;width:83px;flex-basis:83px}.item-media .item-placeholder{font-size:32px}}
+
 /* Quantity controls: single '+' before adding, minus/count/plus after adding. */
 .item-quantity-controls{display:inline-flex;align-items:center;justify-content:center;gap:6px;flex:0 0 auto;min-height:49px;padding:4px;border:1px solid #dccbd6;border-radius:15px;background:var(--wine-veil);direction:ltr;transition:background .2s,border-color .2s}
 .item-qty-button{display:grid;place-items:center;flex:0 0 37px;width:37px;height:38px;border:0;border-radius:11px;font:900 26px/1 "Tajawal",Tahoma,sans-serif;padding:0 0 1px;transition:transform .12s,background .18s}
