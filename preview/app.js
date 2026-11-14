@@ -1,295 +1,233 @@
-/* Lamset Alroh menu behavior — kept separate from markup and styling. */
+/* Lamset Alroh preview | rebuilt order-safe behavior, data is external and unchanged */
 "use strict";
-
-const DATA = window.LAMSET_MENU_DATA;
-let lang = "ar";
+const DATA = window.LAMSET_MENU_DATA || [];
+const $ = id => document.getElementById(id);
 let active = null;
 let cart = [];
-
-const $ = (id) => document.getElementById(id);
-
+let toastTimer;
 function escapeHtml(value) {
-  const entities = {
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  };
-  return String(value).replace(/[&<>"']/g, (character) => entities[character]);
+  return String(value ?? "").replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  })[c]);
 }
 
 function normalizeSearch(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase()
-    .replace(/[\u0640\s]+/g, " ");
+  return String(value || "").trim().toLowerCase().replace(/[\u0640\s]+/g, " ");
+}
+
+function numericPrice(value) {
+  return Number(String(value ?? "0").replace(/[^\d]/g, "")) || 0;
+}
+
+function money(amount) {
+  return Number(amount).toLocaleString("en-US") + " د.ع";
+}
+
+function itemPhoto(category,item) {
+  // Only explicit item-level image paths are used; no misleading category photo as a substitute.
+  return typeof item.img === "string" && item.img.trim() ? item.img.trim() : "";
 }
 
 function renderHome(filter = "") {
   const query = normalizeSearch(filter);
-  const categoryMatches = DATA.filter((category) =>
+  const shown = DATA.filter((category) =>
     !query || normalizeSearch(category.ar + " " + category.en).includes(query)
   );
-  const itemMatches = [];
-
-  if (query) {
-    DATA.forEach((category) => {
-      category.items.forEach((item, index) => {
-        if (normalizeSearch(item.ar).includes(query)) {
-          itemMatches.push({ category, item, index });
-        }
-      });
-    });
-  }
-
-  const referenceTileMap = Array.from({ length: 20 }, (_, index) => index);
-
-  $("categories").innerHTML = categoryMatches.map((category) => {
-    const categoryIndex = DATA.indexOf(category);
-    const tileIndex = category.ar === "عروض لمسة الروح"
-      ? 3
-      : (referenceTileMap[categoryIndex > 4 ? categoryIndex - 1 : categoryIndex] ?? categoryIndex);
-    const row = Math.floor(tileIndex / 4);
-    const column = tileIndex % 4;
-
-    return `
-      <button class="cat" data-cat="${escapeHtml(category.ar)}" type="button">
-        <span class="cat-arrow" aria-hidden="true">‹</span>
-        <span class="cat-photo" style="--ref-col:${column};--ref-row:${row}"></span>
-        <div class="caption">
-          <div class="ar">${escapeHtml(lang === "ar" ? category.ar : category.en)}</div>
-          <div class="en">${escapeHtml(lang === "ar" ? category.en : category.ar)}</div>
-        </div>
-      </button>`;
-  }).join("");
-
-  document.querySelectorAll("[data-cat]").forEach((button) => {
+  $("categories").innerHTML = shown.map((category, i) => `
+    <button class="cat" data-cat="${escapeHtml(category.ar)}" type="button" style="animation-delay:${Math.min(i, 12) * 24}ms">
+      <img class="cat-image" src="${escapeHtml(category.img)}" alt="" loading="lazy" decoding="async">
+      <span class="cat-text"><strong>${escapeHtml(category.ar)}</strong><small>${escapeHtml(category.en)}</small></span>
+      <span class="cat-chevron" aria-hidden="true">‹</span>
+    </button>
+  `).join("");
+  $("categories").querySelectorAll("[data-cat]").forEach((button) => {
     button.addEventListener("click", () => openCategory(button.dataset.cat));
-    if (button.dataset.cat === "حلا بارد") button.classList.add("featured-cat");
   });
-
-  const resultsBox = $("searchResults");
-  const resultList = $("searchResultList");
-  const empty = $("searchEmpty");
-
+  const results = [];
   if (query) {
-    resultsBox.classList.add("show");
-    resultList.innerHTML = itemMatches.map(({ category, item }) => `
-      <button class="search-result" type="button" data-search-cat="${escapeHtml(category.ar)}">
-        <div class="search-result-copy">
-          <div class="search-result-name">${escapeHtml(item.ar)}</div>
-          <div class="search-result-cat">${escapeHtml(category.ar)}</div>
-        </div>
-        <div class="search-result-price">${escapeHtml(item.price)} د.ع</div>
-      </button>`).join("");
-
-    empty.classList.toggle("show", itemMatches.length === 0);
-    resultList.querySelectorAll("[data-search-cat]").forEach((button) => {
-      button.addEventListener("click", () => openCategory(button.dataset.searchCat));
-    });
-  } else {
-    resultsBox.classList.remove("show");
-    resultList.innerHTML = "";
-    empty.classList.remove("show");
+    DATA.forEach((category) => category.items.forEach((item) => {
+      if (normalizeSearch(item.ar).includes(query)) results.push({category, item});
+    }));
   }
+  $("searchResults").hidden = !query;
+  $("searchResultList").innerHTML = results.map(({ category,item }) => `
+    <button class="result-card" type="button" data-result-cat="${escapeHtml(category.ar)}">
+      <span><strong>${escapeHtml(item.ar)}</strong><small>${escapeHtml(category.ar)}</small></span>
+      <span class="result-price">${money(numericPrice(item.price))}</span>
+    </button>
+  `).join("");
+  $("searchEmpty").hidden = results.length > 0;
+  $("searchResultList").querySelectorAll("[data-result-cat]").forEach((button) => {
+    button.addEventListener("click", () => openCategory(button.dataset.resultCat));
+  });
 }
 
 function renderSectionItems(filter = "") {
   if (!active) return;
-
   const query = normalizeSearch(filter);
-  const items = active.items
-    .map((item, index) => ({ item, index }))
-    .filter(({ item }) => !query || normalizeSearch(item.ar).includes(query));
-
-  $("items").innerHTML = items.map(({ item, index }) => `
-    <div class="item">
+  const visible = active.items.map((item, index) => ({item,index})).filter(({item}) => !query || normalizeSearch(item.ar).includes(query));
+  $("items").innerHTML = visible.map(({item,index}, pos) => {
+    const src = itemPhoto(active, item);
+    return `<article class="item" style="animation-delay:${Math.min(pos, 15) * 20}ms">
+      ${src ? `<img class="item-photo" src="${escapeHtml(src)}" alt="${escapeHtml(item.ar)}" loading="lazy" decoding="async">` : ""}
       <div class="item-main">
-        <button class="add-to-cart" type="button" data-add="${index}" aria-label="إضافة إلى السلة">+</button>
-        <div class="item-copy">
-          <div class="name">${escapeHtml(item.ar)}</div>
+        <div class="item-copy"><div class="name">${escapeHtml(item.ar)}</div>
           ${item.desc ? `<div class="desc">${escapeHtml(item.desc)}</div>` : ""}
-          <div class="price">${escapeHtml(item.price)} د.ع</div>
+          <div class="price">${money(numericPrice(item.price))}</div>
         </div>
+        <button class="add-to-cart" data-add="${index}" type="button" aria-label="إضافة ${escapeHtml(item.ar)} للسلة">+</button>
       </div>
-    </div>`).join("");
-
-  $("items").querySelectorAll("[data-add]").forEach((button) => {
-    button.addEventListener("click", () => addToCart(active, Number(button.dataset.add)));
-  });
-
-  $("empty").style.display = items.length ? "none" : "block";
-  $("empty").textContent = query
-    ? (lang === "ar" ? "ماكو صنف مطابق للبحث." : "No matching item found.")
-    : (lang === "ar"
-      ? "لا توجد أصناف مضافة لهذا القسم حالياً."
-      : "No items have been added to this section yet.");
+    </article>`;
+  }).join("");
+  $("items").querySelectorAll("[data-add]").forEach(button => button.addEventListener("click", () => {
+    addToCart(active, Number(button.dataset.add));
+    button.classList.add("just-added");
+    setTimeout(() => button.classList.remove("just-added"), 190);
+  }));
+  $("empty").hidden = visible.length > 0;
+  $("empty").textContent = query ? "ماكو صنف مطابق للبحث." : "لا توجد أصناف بهذا القسم حالياً.";
 }
 
 function openCategory(name) {
-  active = DATA.find((category) => category.ar === name);
-  if (!active) return;
-
-  $("home").style.display = "none";
-  $("page").classList.add("show");
-  $("search").value = "";
+  const category = DATA.find(c => c.ar === name);
+  if (!category) return;
+  active = category;
+  $("home").hidden = true;
+  $("page").hidden = false;
+  $("sectionImageImg").src = category.img;
+  $("sectionImageImg").alt = category.ar;
+  $("sectionTitle").textContent = category.ar;
+  $("sectionText").textContent = "اختار من أصناف " + category.ar + " وأضف اللي يعجبك للسلة.";
   $("sectionSearchInput").value = "";
-  $("sectionImageImg").src = active.img;
-  $("sectionImageImg").alt = active.ar;
-  $("sectionTitle").textContent = lang === "ar" ? active.ar : active.en;
-  $("sectionText").textContent = lang === "ar"
-    ? `اختيارات مميزة من ${active.ar} في منيو لمسة الروح.`
-    : `Featured ${active.en} selections from Lamset Alroh.`;
-  $("sectionLangBtn").textContent = lang === "ar" ? "EN / العربية" : "العربية / EN";
-
-  renderSectionItems("");
-  window.scrollTo(0, 0);
-}
-
-function addToCart(section, index) {
-  const item = section.items[index];
-  if (!item) return;
-
-  const key = `${section.ar}|${item.ar}`;
-  const existing = cart.find((entry) => entry.key === key);
-
-  if (existing) {
-    existing.qty += 1;
-  } else {
-    cart.push({
-      key,
-      section: section.ar,
-      name: item.ar,
-      price: Number(String(item.price).replace(/,/g, "")),
-      qty: 1
-    });
-  }
-
-  updateCartUI();
-}
-
-function updateCartUI() {
-  const count = cart.reduce((sum, item) => sum + item.qty, 0);
-  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-
-  $("cartSummary").textContent = `${count} أصناف • ${total.toLocaleString("en-US")} د.ع`;
-  $("cartTotal").textContent = `${total.toLocaleString("en-US")} د.ع`;
-
-  $("cartRows").innerHTML = cart.length
-    ? cart.map((item) => `
-      <div class="cart-row">
-        <div>
-          <div style="font-weight:800">${escapeHtml(item.name)}</div>
-          <div class="qty">${item.qty} × ${item.price.toLocaleString("en-US")} د.ع</div>
-        </div>
-        <div style="font-weight:900;color:var(--gold2)">
-          ${(item.price * item.qty).toLocaleString("en-US")} د.ع
-        </div>
-      </div>`).join("")
-    : `<div class="empty" style="margin-top:0">السلة فارغة حالياً.</div>`;
-}
-
-function openCart() {
-  $("cartModal").classList.add("show");
-  $("cartModal").setAttribute("aria-hidden", "false");
-  updateCartUI();
-}
-
-function closeCart() {
-  $("cartModal").classList.remove("show");
-  $("cartModal").setAttribute("aria-hidden", "true");
-}
-
-function sendOrder(event) {
-  event.preventDefault();
-
-  if (!cart.length) {
-    alert("السلة فارغة، أضف الأصناف أولاً.");
-    return;
-  }
-
-  const name = $("customerName").value.trim();
-  const phone = $("customerPhone").value.trim();
-  const address = $("customerAddress").value.trim();
-  const notes = $("customerNotes").value.trim();
-
-  if (!name || !phone || !address) {
-    alert("يرجى إكمال الاسم ورقم الهاتف والعنوان.");
-    return;
-  }
-
-  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const orderLines = cart.map((item, index) =>
-    `${index + 1}) ${item.name} — الكمية: ${item.qty} × ${item.price.toLocaleString("en-US")} د.ع = ${(item.price * item.qty).toLocaleString("en-US")} د.ع`
-  );
-
-  const message = [
-    "🍽️ *طلب جديد — مطعم وكافيه لمسة الروح*",
-    "",
-    "👤 الاسم: " + name,
-    "📞 هاتف الزبون: " + phone,
-    "📍 العنوان: " + address,
-    "",
-    "🧾 *تفاصيل الطلب*",
-    ...orderLines,
-    "",
-    "💰 *مجموع الأصناف: " + total.toLocaleString("en-US") + " د.ع*",
-    "🛵 أجور التوصيل: تُحدد حسب المنطقة بالتنسيق مع المطعم",
-    "📦 المجموع النهائي قبل التوصيل: " + total.toLocaleString("en-US") + " د.ع",
-    notes ? "📝 ملاحظات: " + notes : ""
-  ].filter(Boolean).join("\n");
-
-  const url = "https://wa.me/9647765570707?text=" + encodeURIComponent(message);
-  window.open(url, "_blank", "noopener,noreferrer");
+  renderSectionItems();
+  window.scrollTo({top:0,behavior:"instant"});
 }
 
 function backHome() {
   active = null;
-  $("page").classList.remove("show");
-  $("home").style.display = "block";
+  $("page").hidden = true;
+  $("home").hidden = false;
   $("search").value = "";
-  renderHome("");
-  window.scrollTo(0, 0);
+  renderHome();
+  window.scrollTo({top:0,behavior:"instant"});
 }
 
-$("checkoutForm").addEventListener("submit", sendOrder);
-$("viewCart").addEventListener("click", openCart);
-$("cartClose").addEventListener("click", closeCart);
-$("cartModal").addEventListener("click", (event) => {
-  if (event.target.id === "cartModal") closeCart();
-});
-$("backBtn").addEventListener("click", backHome);
-$("sectionSearchInput").addEventListener("input", (event) => renderSectionItems(event.target.value));
+function addToCart(category,index) {
+  const item = category.items[index];
+  if (!item) return;
+  const key = `${category.ar}|${item.ar}`;
+  const found = cart.find(x => x.key === key);
+  if (found) found.qty += 1;
+  else cart.push({key, section: category.ar, name: item.ar, price: numericPrice(item.price), qty:1});
+  updateCartUI();
+  showToast("انضاف للسلة ✓");
+}
 
-$("sectionLangBtn").addEventListener("click", () => {
-  lang = lang === "ar" ? "en" : "ar";
-  document.documentElement.lang = lang;
-  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+function updateCartUI() {
+  const count = cart.reduce((total,item) => total + item.qty,0);
+  const sum = cart.reduce((total,item) => total + item.qty*item.price,0);
+  $("cartSummary").textContent = count + " أصناف • " + money(sum);
+  $("cartBadge").textContent = count.toLocaleString("en-US");
+  $("cartTotal").textContent = money(sum);
+  $("checkoutSubmit").disabled = cart.length === 0;
+  $("cartRows").innerHTML = cart.length ? cart.map((item,index) => `
+    <div class="cart-row">
+      <div><div class="cart-row-name">${escapeHtml(item.name)}</div>
+        <div class="cart-row-price">${money(item.price)} للصنف</div>
+      </div>
+      <div class="cart-row-right">
+        <div class="cart-row-subtotal">${money(item.price*item.qty)}</div>
+        <div class="qty-controls">
+          <button type="button" data-qty="${index}" data-delta="-1" aria-label="تقليل كمية ${escapeHtml(item.name)}">−</button>
+          <span>${item.qty.toLocaleString("en-US")}</span>
+          <button type="button" data-qty="${index}" data-delta="1" aria-label="زيادة كمية ${escapeHtml(item.name)}">+</button>
+        </div>
+      </div>
+    </div>
+  `).join("") : `<p class="empty-message">السلة فارغة حالياً. ضيف صنف يعجبك من المنيو.</p>`;
+  $("cartRows").querySelectorAll("[data-qty]").forEach(button => button.addEventListener("click", () => {
+    changeQty(Number(button.dataset.qty), Number(button.dataset.delta));
+  }));
+}
 
-  if (active) openCategory(active.ar);
-  else renderHome($("search").value);
-});
+function changeQty(index,delta) {
+  const item = cart[index];
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart.splice(index,1);
+  updateCartUI();
+}
 
-$("search").addEventListener("input", (event) => {
-  if (!active) renderHome(event.target.value);
-});
+function openCart() {
+  $("cartModal").hidden = false;
+  $("cartModal").setAttribute("aria-hidden","false");
+  document.body.classList.add("modal-open");
+  updateCartUI();
+  $("cartClose").focus({preventScroll:true});
+}
 
-if ($("langBtn")) {
-  $("langBtn").addEventListener("click", () => {
-    lang = lang === "ar" ? "en" : "ar";
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-    $("langBtn").textContent = lang === "ar" ? "EN / العربية" : "العربية / EN";
-    $("choose").textContent = lang === "ar" ? "اختر القسم الذي تريده" : "Choose Your Section";
-    $("chooseEn").textContent = lang === "ar" ? "Choose Your Section" : "اختر القسم الذي تريده";
-    $("footer").textContent = lang === "ar"
-      ? "أكثر من مجرد وجبة .. إنها لمسة روح"
-      : "More than a meal .. it is a touch of soul";
+function closeCart() {
+  $("cartModal").hidden = true;
+  $("cartModal").setAttribute("aria-hidden","true");
+  document.body.classList.remove("modal-open");
+  $("viewCart").focus({preventScroll:true});
+}
 
-    if (active) openCategory(active.ar);
-    else renderHome($("search").value);
+function showToast(message) {
+  const toast = $("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 1450);
+}
+
+function sendOrder(event) {
+  event.preventDefault();
+  if (cart.length === 0) { showToast("السلة فارغة"); return; }
+  if (!$("checkoutForm").reportValidity()) return;
+  const name = $("customerName").value.trim(), phone = $("customerPhone").value.trim(),
+        address = $("customerAddress").value.trim(), notes = $("customerNotes").value.trim();
+  const normalizedPhone = phone.replace(/[\s()\-]/g, "");
+  if (!/^(?:\+?964|0)?7\d{9}$/.test(normalizedPhone)) {
+    $("customerPhone").setCustomValidity("أدخل رقم موبايل عراقي صحيح، مثال 07765570707");
+    $("customerPhone").reportValidity();
+    return;
+  }
+  const lines = cart.map((item,index) =>
+    `${index + 1}. ${item.name} (${item.section})\n   ${item.qty} × ${money(item.price)} = ${money(item.qty * item.price)}`
+  );
+  const total = cart.reduce((acc,item) => acc + item.qty*item.price,0);
+  const message = [
+    "🍽️ *طلب جديد | مطعم وكافيه لمسة الروح*", "",
+    "👤 الاسم الكامل: " + name,
+    "📞 رقم الهاتف: " + phone,
+    "📍 العنوان: " + address, "",
+    "🧾 *تفاصيل الطلب*", ...lines, "",
+    "💰 *مجموع الأصناف: " + money(total) + "*",
+    "🛵 أجور التوصيل: حسب المنطقة وتُحدد من المطعم",
+    "📦 *المجموع قبل أجور التوصيل: " + money(total) + "*",
+    notes ? "📝 ملاحظات: " + notes : ""
+  ].filter(Boolean).join("\n");
+  // Only the customer initiates WhatsApp. This preview never submits or sends orders automatically.
+  window.open("https://wa.me/9647765570707?text=" + encodeURIComponent(message), "_blank", "noopener,noreferrer");
+}
+
+function init() {
+  $("search").addEventListener("input", event => renderHome(event.target.value));
+  $("sectionSearchInput").addEventListener("input", event => renderSectionItems(event.target.value));
+  $("backBtn").addEventListener("click", backHome);
+  $("viewCart").addEventListener("click", openCart);
+  $("cartClose").addEventListener("click", closeCart);
+  $("checkoutForm").addEventListener("submit",sendOrder);
+  $("customerPhone").addEventListener("input", () => $("customerPhone").setCustomValidity(""));
+  $("cartModal").addEventListener("click", event => {
+    if (event.target === $("cartModal")) closeCart();
   });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && !$("cartModal").hidden) closeCart();
+  });
+  renderHome();
+  updateCartUI();
 }
 
-renderHome();
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init); else init();
