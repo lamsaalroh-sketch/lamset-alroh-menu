@@ -108,6 +108,19 @@ function changeItemQuantity(category, index, delta) {
   updateCartUI();
 }
 
+
+function sectionIcon(name) {
+  const icons={
+    "المطبخ الشرقي":"🍲","المشاوي":"🍖","الشاورما":"🌯","السناكات":"🍔",
+    "البيتزا":"🍕","حلا بارد":"🍰","بان كيك":"🥞","الكريب و الوافل":"🧇",
+    "الايس كريم":"🍨","المشروبات الغازية":"🥤","المشروبات الساخنة":"☕",
+    "العصائر والمشروبات":"🍹","ايس كوفي":"🧋","سموذي":"🍓",
+    "ميلك شيك":"🥛","الاراكيل":"💨","الاراكيل الطبيعية":"🍍",
+    "الموهيتو":"🍋","المكسرات":"🥜","فواكة":"🍉","عروض لمسة الروح":"🎁"
+  };
+  return icons[name] || "🍽️";
+}
+
 function renderSectionItems(filter = "") {
   if (!active) return;
   const query = normalizeSearch(filter);
@@ -115,7 +128,9 @@ function renderSectionItems(filter = "") {
   $("items").innerHTML = visible.map(({item,index}, pos) => {
     const src = itemPhoto(active, item);
     return `<article class="item${cartQuantity(active, item) ? " item-has-quantity" : ""}" data-item-index="${index}" style="animation-delay:${Math.min(pos, 15) * 20}ms">
-      ${src ? `<img class="item-photo" src="${escapeHtml(src)}" alt="${escapeHtml(item.ar)}" loading="lazy" decoding="async">` : ""}
+      <div class="item-media"><span class="item-placeholder" aria-hidden="true">${sectionIcon(active.ar)}</span>
+        ${src ? `<img class="item-photo" src="${escapeHtml(src)}" alt="${escapeHtml(item.ar)}" loading="lazy" decoding="async">` : ""}
+      </div>
       <div class="item-main">
         <div class="item-copy"><div class="name">${escapeHtml(item.ar)}</div>
           ${item.desc ? `<div class="desc">${escapeHtml(item.desc)}</div>` : ""}
