@@ -106,3 +106,16 @@ button:disabled{cursor:not-allowed;opacity:.58}img{max-width:100%}
 
 /* Real image crops uploaded as a single 3.5 KB 8×8 JPEG sprite. Branded SVG preview remains as fallback. */
 .item-photo-sprite{position:absolute;inset:0;z-index:3;display:block;width:100%;height:100%;border-radius:inherit;background-image:url("./assets/photo-sprite.jpg?v=20261114-60hq");background-repeat:no-repeat;background-size:800% 800%;background-color:#f8f0ec}
+
+
+/* 240 item photos, in six exact 8x5 sheets; small number identifies the image for later correction. */
+.item-photo-review{
+  position:absolute;inset:0;z-index:4;display:block;width:100%;height:100%;
+  border-radius:inherit;background-repeat:no-repeat;background-size:800% 500%;
+  background-color:#461b39;
+}
+.item-photo-number{
+  position:absolute;z-index:5;bottom:4px;left:4px;direction:ltr;
+  border-radius:5px;background:rgba(31,12,27,.82);color:#fff3dd;
+  font:800 10px/1.2 Arial,sans-serif;letter-spacing:.1px;padding:3px 5px;
+}
