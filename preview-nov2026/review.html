@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#461b39">
+<title>مراجعة صور المنيو | مطعم وكافيه لمسة الروح</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{font-family:"Tajawal",Tahoma,sans-serif;--wine:#461b39;--gold:#f1c783;--paper:#faf7f3;--line:#e2d6de}
+*{box-sizing:border-box}
+body{background:var(--paper);color:#34272e;margin:0}
+header{background:var(--wine);color:#fff;text-align:center;padding:26px 16px;border-bottom:4px solid #c79c63}
+header h1{font-size:clamp(25px,4vw,34px);font-weight:900;margin:0}
+header p{font-size:14px;margin:8px 0 0;color:#f3e2e9}
+main{width:min(1220px,calc(100% - 26px));margin:auto;padding:20px 0 70px}
+.notice{border:1px solid #d9c4d1;background:#fff9f6;border-radius:13px;padding:12px 15px;line-height:1.7;color:#664451;font-size:13px}
+.tools{display:flex;align-items:center;gap:10px;margin:17px 0;flex-wrap:wrap}
+.tools input,.tools select{border:1px solid var(--line);border-radius:12px;min-height:49px;padding:10px 14px;font:600 15px "Tajawal",sans-serif;background:#fff;color:#34272e}
+.tools input{flex:1;min-width:190px}
+.tools a{display:inline-grid;place-items:center;text-decoration:none;background:var(--wine);color:#fff;padding:10px 16px;min-height:49px;border-radius:12px;font-weight:800}
+.summary{font-size:14px;color:#654856;font-weight:800;margin:0 0 16px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px}
+.card{overflow:hidden;border-radius:17px;border:1px solid var(--line);background:#fff;box-shadow:0 5px 14px #461b390a}
+.image{position:relative;height:156px;background-color:var(--wine);background-size:800% 500%;background-repeat:no-repeat}
+.number{position:absolute;bottom:7px;left:7px;direction:ltr;background:#2a1023e8;border:1px solid #d6b47a;border-radius:6px;color:#ffe8bb;font:800 12px Arial,sans-serif;padding:4px 7px}
+.card-body{padding:10px}
+.card-name{font-weight:900;font-size:15px;min-height:40px;line-height:1.35}
+.card-section{font-size:12px;color:#896f7d;display:block;margin:2px 0}
+.card-price{font-size:15px;color:var(--wine);font-weight:900;direction:ltr;text-align:right}
+.empty{padding:40px;text-align:center;color:#6e5a63}
+@media(max-width:490px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.image{height:128px}.card-name{font-size:13px}.card-body{padding:8px}.tools input{width:100%}}
+</style>
+<script src="./menu-data.js?v=20261115-full240" defer></script>
+<script src="./photo-sprites-inline.js?v=20261115-full240" defer></script>
+<script defer>
+"use strict";
+function boot(){
+ const menu=window.LAMSET_MENU_DATA||[];
+ const sheets=window.LAMSET_SPRITE_DATA||[];
+ if(sheets.length!==6){document.getElementById("summary").textContent="تعذر تحميل الصور، يرجى تحديث الصفحة";return}
+ const style=document.createElement("style");
+ style.textContent=sheets.map((src,i)=>".sheet-"+i+"{background-image:url("+src+");}").join("\n");
+ document.head.appendChild(style);
+ const data=menu.flatMap(cat=>cat.items.map(it=>({section:cat.ar,name:it.ar,price:it.price})));
+ const gallery=document.getElementById("gallery"),input=document.getElementById("search"),select=document.getElementById("section");
+ const clean=v=>String(v||"").toLowerCase().trim().replace(/[\u0640\s]+/g," ");
+ const esc=v=>String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ for(const category of menu){const opt=document.createElement("option");opt.value=category.ar;opt.textContent=category.ar;select.appendChild(opt)}
+ gallery.innerHTML=data.map((it,index)=>{
+ const group=Math.floor(index/40),tile=index%40;
+ const x=((tile%8)/7*100).toFixed(5),y=(Math.floor(tile/8)/4*100).toFixed(5);
+ return '<article class="card" data-section="'+esc(it.section)+'" data-lookup="'+esc(clean(String(index+1).padStart(3,"0")+" "+it.name+" "+it.section))+'">'+
+ '<div class="image sheet-'+group+'" style="background-position:'+x+'% '+y+'%"><span class="number">#'+String(index+1).padStart(3,"0")+'</span></div>'+
+ '<div class="card-body"><div class="card-name">'+esc(it.name)+'</div><span class="card-section">'+esc(it.section)+'</span><div class="card-price">'+esc(it.price)+' د.ع</div></div></article>'
+ }).join("");
+ const cards=[...gallery.querySelectorAll(".card")];
+ function filter(){
+  const q=clean(input.value),section=select.value;let count=0;
+  for(const card of cards){const show=(!section||card.dataset.section===section)&&card.dataset.lookup.includes(q);card.hidden=!show;if(show)count++}
+  document.getElementById("summary").textContent="الصور المعروضة: "+count.toLocaleString("en-US")+" من "+data.length.toLocaleString("en-US");
+ }
+ input.addEventListener("input",filter);select.addEventListener("change",filter);filter();
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();
+</script>
+</head>
+<body>
+<header><h1>مراجعة صور منيو لمسة الروح</h1><p>كل صنف بصورته ورقمه وسعره، للتأكد من مطابقة الصور</p></header>
+<main>
+<p class="notice">الصور توضيحية مولّدة للمراجعة وليست تصويراً موثّقاً لأطباق المطعم. إذا شفت صورة غلط، ارسل رقمها الظاهر مثل #052 واسم الصنف. ماكو تغيير بالأسعار أو الطلبات هنا.</p>
+<div class="tools"><input id="search" type="search" aria-label="البحث عن صورة" placeholder="ابحث باسم الصنف أو رقم الصورة"><select id="section" aria-label="اختيار القسم"><option value="">كل الأقسام</option></select><a href="./index.html?v=20261115-full240">ارجع للمنيو</a></div>
+<p id="summary" class="summary">جاري عرض الصور...</p>
+<div id="gallery" class="gallery"></div>
+</main>
+</body>
+</html>
