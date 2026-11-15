@@ -121,19 +121,47 @@ function sectionIcon(name) {
   return icons[name] || "🍽️";
 }
 
+
+function installReviewPhotoSprites() {
+  if (!Array.isArray(window.LAMSET_SPRITE_DATA) || window.LAMSET_SPRITE_DATA.length !== 6) return;
+  if (document.getElementById("lamset-photo-sprite-styles")) return;
+  const style = document.createElement("style");
+  style.id = "lamset-photo-sprite-styles";
+  style.textContent = window.LAMSET_SPRITE_DATA.map((src, n) =>
+    ".item-photo-review.sheet-" + n + "{background-image:url(\\"" + src + "\");}"
+  ).join("\n");
+  document.head.appendChild(style);
+}
+function reviewPhotoIndex(category, itemIndex) {
+  let i = 0;
+  for (const cat of DATA) {
+    if (cat === category) return i + itemIndex;
+    i += cat.items.length;
+  }
+  return -1;
+}
+
 function renderSectionItems(filter = "") {
   if (!active) return;
   const query = normalizeSearch(filter);
   const visible = active.items.map((item, index) => ({item,index})).filter(({item}) => !query || normalizeSearch(item.ar).includes(query));
   $("items").innerHTML = visible.map(({item,index}, pos) => {
     const src = itemPhoto(active, item);
+    const globalIndex = reviewPhotoIndex(active, index);
+    const group = Math.floor(globalIndex / 40);
+    const posWithinGroup = globalIndex % 40;
+    const hasReviewPhoto = globalIndex >= 0 && Boolean(window.LAMSET_SPRITE_DATA?.[group]);
+    const reviewPhoto = hasReviewPhoto
+      ? `<span class="item-photo-review sheet-${group}" role="img" aria-label="صورة توضيحية لـ${escapeHtml(item.ar)}" style="background-position:${((posWithinGroup % 8) / 7 * 100).toFixed(5)}% ${(Math.floor(posWithinGroup / 8) / 4 * 100).toFixed(5)}%"></span><span class="item-photo-number">#${String(globalIndex+1).padStart(3, "0")}</span>`
+      : "";
     const spriteIdx = window.LAMSET_PHOTO_SPRITE_INDEX?.[active.ar + "|" + item.ar];
     const photoTile = Number.isInteger(spriteIdx) && spriteIdx >= 0
-      ? `<span class="item-photo-sprite" role="img" aria-label="صورة توضيحية لـ${escapeHtml(item.ar)}" style="background-position:${((spriteIdx % 8) / 7 * 100).toFixed(5)}% ${(Math.floor(spriteIdx / 8) / 7 * 100).toFixed(5)}%"></span>`
+      && !hasReviewPhoto ? `<span class="item-photo-sprite" role="img" aria-label="صورة توضيحية لـ${escapeHtml(item.ar)}" style="background-position:${((spriteIdx % 8) / 7 * 100).toFixed(5)}% ${(Math.floor(spriteIdx / 8) / 7 * 100).toFixed(5)}%"></span>`
       : "";
     return `<article class="item${cartQuantity(active, item) ? " item-has-quantity" : ""}" data-item-index="${index}" style="animation-delay:${Math.min(pos, 15) * 20}ms">
       <div class="item-media"><span class="item-placeholder" aria-hidden="true">${sectionIcon(active.ar)}</span>
-        ${src ? `<img class="item-photo" src="${escapeHtml(src)}" alt="${escapeHtml(item.ar)}" loading="lazy" decoding="async">` : ""}
+        ${!hasReviewPhoto && src ? `<img class="item-photo" src="${escapeHtml(src)}" alt="${escapeHtml(item.ar)}" loading="lazy" decoding="async">` : ""}
+        ${reviewPhoto}
         ${photoTile}
       </div>
       <div class="item-main">
@@ -277,6 +305,7 @@ function sendOrder(event) {
 }
 
 function init() {
+  installReviewPhotoSprites();
   $("search").addEventListener("input", event => renderHome(event.target.value));
   $("sectionSearchInput").addEventListener("input", event => renderSectionItems(event.target.value));
   $("items").addEventListener("click", event => {
