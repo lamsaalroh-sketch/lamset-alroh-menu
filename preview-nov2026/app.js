@@ -128,7 +128,7 @@ function installReviewPhotoSprites() {
   const style = document.createElement("style");
   style.id = "lamset-photo-sprite-styles";
   style.textContent = window.LAMSET_SPRITE_DATA.map((src, n) =>
-    ".item-photo-review.sheet-" + n + "{background-image:url(\\"" + src + "\");}"
+    ".item-photo-review.sheet-" + n + "{background-image:url(" + src + ");}"
   ).join("\n");
   document.head.appendChild(style);
 }
